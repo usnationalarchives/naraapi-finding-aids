@@ -8,9 +8,9 @@ export const store = configureStore();
 import FindingAids from '../containers/FindingAids';
 
 
-const Index = () => (
+const Index = ({url}) => (
   <Provider store={store}>
-    <FindingAids />
+    <FindingAids router={url.query}/>
   </Provider>
 );
 

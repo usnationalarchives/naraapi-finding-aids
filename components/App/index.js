@@ -21,7 +21,6 @@ class App extends React.Component {
       recordGroupItems =  this.props.data.opaResponse.results.result.map((item, index) =>
         <RecordGroup data={item} key={item.naId} />
       );
-      console.log(recordGroupItems);
     }
 
     return (

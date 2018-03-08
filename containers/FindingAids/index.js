@@ -5,10 +5,10 @@ import {
   requestData
 } from '../../actions/Browse';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, router) => {
   return {
     data: state.findingAidsData.appData,
-    isFetching: state.findingAidsData.isFetching
+    isFetching: state.findingAidsData.isFetching,
   };
 };
 
