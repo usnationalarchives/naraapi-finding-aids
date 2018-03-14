@@ -9,7 +9,7 @@ Currentlu the app lives on a heroku environment but will probably move to custom
 1. Clone the repo
 1. Navigate to the directory.
 1. Run `npm install` to install Next and all the dependencies. 
-1. `npm dev` will run your local development version of the site. 
+1. `npm run dev` will run your local development version of the site. 
 
 ### Making Updates
 1. Make sure you have forked the repo. 
