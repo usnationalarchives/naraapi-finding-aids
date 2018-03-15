@@ -4,16 +4,29 @@ export const REQUEST_DATA = 'REQUEST_DATA';
 export const IS_FETCHING = 'IS_FETCHING';
 export const BUILD_APP = 'BUILD_APP';
 
-export function requestData() {
+export function requestData(dataType, id) {
   return dispatch => {
-    dispatch(getDataFromApi());
+    dispatch(getDataFromApi(dataType, id));
   }
 }
 
-function getDataFromApi() {
+function getDataFromApi(dataType, id) {
+  console.log(dataType);
+  // After the first, each new request addition must start with &
   let apiRequest = 'https://catalog.archives.gov/api/v1';
-  apiRequest += '?resultTypes=recordGroup&rows=10000';
 
+  if (dataType == 'recordGroup') {
+    apiRequest += '?resultTypes=' + dataType;
+  }
+
+  if(dataType == 'series') {
+    apiRequest += '?resultTypes=series&description.series.parentRecordGroup.recordGroupNumber=' + id;
+  }
+  // if (id) {
+  //   apiRequest += '&resultTypes=recordGroup&rows=10000';
+  // }
+  apiRequest += '&rows=10000';
+  console.log(apiRequest);
   return dispatch => {
     dispatch(isFetching());
     return fetch(apiRequest)

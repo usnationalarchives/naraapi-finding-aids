@@ -14,8 +14,8 @@ const mapStateToProps = (state, router) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onLoadApp: () => {
-      dispatch(requestData())
+    onLoadApp: (dataType, id) => {
+      dispatch(requestData(dataType, id))
     }
   };
 };
