@@ -11,7 +11,6 @@ export function requestData(dataType, id) {
 }
 
 function getDataFromApi(dataType, id) {
-  console.log(dataType);
   // After the first, each new request addition must start with &
   let apiRequest = 'https://catalog.archives.gov/api/v1';
 
@@ -22,9 +21,7 @@ function getDataFromApi(dataType, id) {
   if(dataType == 'series') {
     apiRequest += '?resultTypes=series&description.series.parentRecordGroup.recordGroupNumber=' + id;
   }
-  // if (id) {
-  //   apiRequest += '&resultTypes=recordGroup&rows=10000';
-  // }
+
   apiRequest += '&rows=10000';
   console.log(apiRequest);
   return dispatch => {

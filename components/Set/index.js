@@ -33,7 +33,7 @@ const Set = ({
   )
 }
 
-Set.PropTypes = {
+Set.propTypes = {
   description: PropTypes.string,
   open: PropTypes.bool.isRequired,
   resultType: PropTypes.oneOf(['recordGroup', 'series']).isRequired,
