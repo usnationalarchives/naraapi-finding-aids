@@ -24,12 +24,22 @@ const Set = ({
   }
 
   return(
-    <Fragment>
+    <div>
       <h2>{title}</h2>
       <Link href={{ pathname: '/' + path_name, query: {id: setNumber}}}>
         <a>View {query_key}</a>
       </Link>
-    </Fragment>
+      <style jsx>{`
+        div {
+          background:#f1f1f1;
+          margin-bottom:20px;
+          padding:20px;
+        }
+        div:nth-child(odd) {
+          background:#dce4ef;
+        }
+      `}</style>
+    </div>
   )
 }
 
