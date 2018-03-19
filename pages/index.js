@@ -1,24 +1,10 @@
 import React from 'react';
-import Link from 'next/link'
+import Link from 'next/link';
 
-import 'isomorphic-unfetch'
+import 'isomorphic-unfetch';
+
+import Header from '../components/Header';
 import Set from '../components/Set';
-//import ReactDOM from 'react-dom';
-//import { Provider } from 'react-redux';
-
-//import configureStore from '../reducers/configureStore';
-//export const store = configureStore();
-
-//import FindingAidsContainer from '../containers/FindingAidsContainer';
-
-
-// const Index = ({url}) => (
-//   <Provider store={store}>
-//     <FindingAidsContainer router={url.query}/>
-//   </Provider>
-// );
-
-// export default Index;
 
 export default class Index extends React.Component {
   static async getInitialProps () {
@@ -33,6 +19,7 @@ export default class Index extends React.Component {
     console.log(this.props.data)
     return (
       <div>
+        <Header text={'Finding Aids: All Record Groups'}/>
         {this.props.data.map((result, index) => 
           <Set
             key={index}
@@ -43,10 +30,6 @@ export default class Index extends React.Component {
             title={result.description.recordGroup.title}
           />
         )}
-        {/* <Link prefetch href={{ 
-          pathname: '/record-group', 
-          query: {[recordGroupNumber]: setNumber}
-        }}><a>How about preact?</a></Link> */}
       </div>
     )
   }

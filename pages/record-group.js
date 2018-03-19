@@ -3,38 +3,23 @@ import Link from 'next/link'
 
 import 'isomorphic-unfetch'
 
-
+import Header from '../components/Header';
 import Set from '../components/Set';
-//import ReactDOM from 'react-dom';
-//import { Provider } from 'react-redux';
-
-//import configureStore from '../reducers/configureStore';
-//export const store = configureStore();
-
-//import FindingAidsContainer from '../containers/FindingAidsContainer';
-
-
-// const Index = ({url}) => (
-//   <Provider store={store}>
-//     <FindingAidsContainer router={url.query}/>
-//   </Provider>
-// );
-
-// export default Index;
 
 export default class RecordGroup extends React.Component {
   
   static async getInitialProps ({ pathname, query }) {
-    console.log(query)
     // eslint-disable-next-line no-undef
-    const res = await fetch('https://catalog.archives.gov/api/v1?resultTypes=series&description.series.parentRecordGroup.recordGroupNumber='+ query.id + '&rows=10000')
-    const json = await res.json()
+    const res = await fetch('https://catalog.archives.gov/api/v1?resultTypes=series&description.series.parentRecordGroup.recordGroupNumber='+ query.id + '&rows=100')
+    const json = await res.json();
+    // Return Number of Results to display in header.
     return { data: json.opaResponse.results.result }
   }
 
   render () {
     return (
       <div>
+        <Header text={'Finding Aids: ' + this.props.data[0].description.series.parentRecordGroup.title}/>
         {this.props.data.map((result, index) => 
           <Set
             key={index}
@@ -45,7 +30,6 @@ export default class RecordGroup extends React.Component {
             title={result.description.series.title}
           />
         )}
-        <p>eijfowefij</p>
       </div>
     )
   }

@@ -3,6 +3,9 @@ import {Fragment} from 'react';
 import Link from 'next/link'
 import PropTypes from 'prop-types';
 
+
+
+
 const Set = ({
   description,
   open,
@@ -11,6 +14,34 @@ const Set = ({
   setNumber,
   title
 }) => {
+  // This is needed for styling links.
+  const scoped = resolveScopedStyles(
+    <scope>
+      <style jsx>{`
+        .link:link {
+          color:#0071bc;
+        }
+        .link:visited {
+          color:#4c2c92;
+        }
+        .link:focus {
+          outline:2px dotted #aeb0b5;
+          outline-offset:3px;
+        }
+        .link:hover,
+        .link:active {
+          color:#205493;
+        }
+      `}</style>
+    </scope>
+  )
+
+  function resolveScopedStyles(scope) {
+    return {
+      className: scope.props.className,
+      styles: scope.props.children
+    }
+  }
 
   let path_name;
   let query_key;
@@ -26,9 +57,13 @@ const Set = ({
   return(
     <div>
       <h2>{title}</h2>
-      <Link href={{ pathname: '/' + path_name, query: {id: setNumber}}}>
-        <a>View {query_key}</a>
+      <Link 
+        href={{ pathname: '/' + path_name, query: {id: setNumber}}}>
+        <a className={`link ${scoped.className}`}>View {query_key}</a>
       </Link>
+      <p>Number: {setNumber}</p>
+      <p>Number of Children: {setChildren}</p>
+      {scoped.styles}
       <style jsx>{`
         div {
           background:#f1f1f1;
