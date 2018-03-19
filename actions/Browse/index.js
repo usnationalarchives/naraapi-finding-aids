@@ -28,16 +28,17 @@ function getDataFromApi(dataType, id) {
     dispatch(isFetching());
     return fetch(apiRequest)
       .then(response => response.json())
-      .then(json => dispatch(buildApp(json)))
+      .then(json => dispatch(buildApp(json, dataType)))
   }
 }
 
-function buildApp(data) {
+function buildApp(data, dataType) {
   return {
     type: BUILD_APP,
     appData: data,
     recievedAt: Date.now(),
-    isFetching: false
+    isFetching: false,
+    resultType: dataType
   }
 }
 

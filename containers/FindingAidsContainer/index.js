@@ -9,6 +9,7 @@ const mapStateToProps = (state, router) => {
   return {
     data: state.findingAidsData.appData,
     isFetching: state.findingAidsData.isFetching,
+    resultType: state.findingAidsData.resultType
   };
 };
 
@@ -20,9 +21,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const FindingAids = connect(
+const FindingAidsContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(App);
 
-export default FindingAids;
+export default FindingAidsContainer;

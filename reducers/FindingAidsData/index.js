@@ -21,7 +21,8 @@ function findingAidsData(state = intialState, action) {
         ...state,
         appData: action.appData,
         recievedAt: action.recievedAt,
-        isFetching: action.isFetching
+        isFetching: action.isFetching,
+        resultType: action.resultType
       }
     default:
       return state;

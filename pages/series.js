@@ -2,7 +2,9 @@ import React from 'react';
 import Link from 'next/link'
 
 import 'isomorphic-unfetch'
-import Set from '../components/Set';
+
+
+import Item from '../components/Item';
 //import ReactDOM from 'react-dom';
 //import { Provider } from 'react-redux';
 
@@ -20,33 +22,29 @@ import Set from '../components/Set';
 
 // export default Index;
 
-export default class Index extends React.Component {
-  static async getInitialProps () {
+export default class Series extends React.Component {
+  
+  static async getInitialProps ({ pathname, query }) {
+    
     // eslint-disable-next-line no-undef
-    const res = await fetch('https://catalog.archives.gov/api/v1?resultTypes=recordGroup&rows=10000')
+    const res = await fetch('https://catalog.archives.gov/api/v1?resultTypes=item&description.item.parentSeries.naId_is='+ query.id)
     const json = await res.json()
-
+    console.log(res)
     return { data: json.opaResponse.results.result }
   }
 
   render () {
-    console.log(this.props.data)
     return (
       <div>
         {this.props.data.map((result, index) => 
-          <Set
+          <Item
             key={index}
             open={false}
-            resultType={'recordGroup'}
-            setChildren={Number(result.description.recordGroup.seriesCount)}
-            setNumber={Number(result.description.recordGroup.recordGroupNumber)}
-            title={result.description.recordGroup.title}
+            resultType={'item'}
+            title={result.description.item.title}
           />
         )}
-        {/* <Link prefetch href={{ 
-          pathname: '/record-group', 
-          query: {[recordGroupNumber]: setNumber}
-        }}><a>How about preact?</a></Link> */}
+        <p>seiuhiuhw</p>
       </div>
     )
   }

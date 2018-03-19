@@ -12,22 +12,22 @@ const Set = ({
   title
 }) => {
 
-  let linkTitle;
-  let queryKey;
+  let path_name;
+  let query_key;
 
   if(resultType == 'recordGroup') {
-    linkTitle = 'View Record Group';
-    queryKey = 'recordGroup';
+    query_key = 'recordGroup';
+    path_name = 'record-group';
   } else {
-    linkTitle = 'View Series';
-    queryKey = 'series';
+    query_key = 'series';
+    path_name = 'series';
   }
 
   return(
     <Fragment>
       <h2>{title}</h2>
-      <Link href={{ pathname: '/', query: {[queryKey]: setNumber}}}>
-        <a>{linkTitle}</a>
+      <Link href={{ pathname: '/' + path_name, query: {id: setNumber}}}>
+        <a>View {query_key}</a>
       </Link>
     </Fragment>
   )
