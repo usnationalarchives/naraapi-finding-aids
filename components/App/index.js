@@ -1,67 +1,55 @@
 import React from 'react';
 import Router from 'next/router'
 
+import Header from '../Header';
 import Set from '../Set';
 import Item from '../Item';
 import FindingAids from '../FindingAids';
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageTitle: props.pageTitle,
+      resultType: props.resultType,
+      results: props.data,
+      currentResults: props.currentResults,
+    }
+  }
+
   render() {
-
-    
-    let dataItems;
-
+    let setChildren;
+    let setNumber;
+    let componentTitle;
     return (
       <div>
-        <h1>Finding Aids</h1>
-        {this.props.isFetching &&
-          <h2>Searching...</h2>
-        }
-        {(!this.props.isFetching && this.props.data) &&
-          dataItems
-        }
-        <style jsx global>{`
-          @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,700');
-          @import url('https://fonts.googleapis.com/css?family=Merriweather');
-          html {
-            font-size:10px;
-          }
-          body {
-            background-color:#fff;
-            font-size:16px;
-            font-family:"Source Sans Pro", sans-serif;
-            text-align:left;
-            margin:15px;
-          }
-          h1 {
-            color:#205493;
-            font-family:"Merriweather", serif;
-            font-weight:700;
-            font-size:40px;
-            line-height:52px;
-          }
-          h2 {
-            font-family:"Merriweather", serif;
-            font-weight:700;
-            font-size:30px;
-            line-height:39px;
-            margin: 0 0 20px;
-          }
-          h3 {
-            font-family: "Merriweather", serif;
-            font-weight:700;
-            font-size:20px;
-            line-height:26px;
-          }
-          h4 {
-            font-family:"Merriweather", serif;
-            font-weight:700;
-            font-size:17px;
-            line-height:22px;
-          }
-          
-        `}</style>
+        <Header text={'Finding Aids: ' + this.state.pageTitle}/>
+          {this.state.results.map((result, index) => {
+            if(this.state.resultType === "recordGroup") {
+              return (
+                <Set
+                  key={index}
+                  open={false}
+                  resultType={'recordGroup'}
+                  setChildren={Number(result.description.recordGroup.seriesCount)}
+                  setNumber={Number(result.description.recordGroup.recordGroupNumber)}
+                  title={result.description.recordGroup.title}
+                />
+              )
+            } else {
+              return (
+                <Set
+                  key={index}
+                  open={false}
+                  resultType={'series'}
+                  setChildren={Number(result.description.series.itemCount)}
+                  setNumber={Number(result.description.series.naId)}
+                  title={result.description.series.title}
+                />
+              )
+            }
+          })}
       </div>
     );
   }
