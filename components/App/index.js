@@ -15,7 +15,25 @@ class App extends React.Component {
       resultType: props.resultType,
       results: props.data,
       currentResults: props.currentResults,
+      cursorMark: props.cursorMark,
+      offset: props.offset
     }
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    let api = 'https://catalog.archives.gov/api/v1?';
+    if(this.state.resultType === 'recordGroup') {
+      api += 'resultTypes=recordGroup&rows=50&cursorMark=' + this.state.cursorMark;
+    } else {
+      api += 'resultTypes=series&description.series.parentRecordGroup.recordGroupNumber='+ this.props.query + '&rows=50&cursorMark=' + this.state.cursorMark;
+    }
+    console.log(api)
+    fetch(api)
+    .then(response => response.json())
+    .then(data => this.setState({results: this.state.results.concat(data.opaResponse.results.result), cursorMark: data.opaResponse.results.nextCursorMark})
+      
+    );
   }
 
   render() {
@@ -50,6 +68,7 @@ class App extends React.Component {
               )
             }
           })}
+          <button onClick={this.handleClick}>Load More</button>
       </div>
     );
   }

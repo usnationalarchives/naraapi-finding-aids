@@ -22,7 +22,6 @@ class Set extends React.Component {
     } else {
       api += '&description.item.parentSeries.naId=' + this.props.setNumber;
     }
-    console.log(api)
     fetch(api)
     .then(response => response.json())
     .then(data => this.setState({image: data.opaResponse.results.result[0].objects.object.file['@url']})
