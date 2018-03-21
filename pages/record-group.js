@@ -19,7 +19,7 @@ export default class RecordGroup extends React.Component {
   render () {
     let resultsArray = [];
     for(let i = 0; i < this.props.data.length; i++) {
-      resultsArray.push(this.props.data[i].description.naId)
+      resultsArray.push(this.props.data[i].naId)
     }
     return (
       <App 
