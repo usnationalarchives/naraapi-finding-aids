@@ -60,7 +60,7 @@ class App extends React.Component {
                   title={result.description.recordGroup.title}
                 />
               )
-            } else {
+            } else if(this.state.resultType === "series") {
               return (
                 <Set
                   key={index}
@@ -69,6 +69,20 @@ class App extends React.Component {
                   setChildren={Number(result.description.series.itemCount)}
                   setNumber={Number(result.description.series.naId)}
                   title={result.description.series.title}
+                />
+              )
+            } else {
+              return (
+                <Item
+                  key={index}
+                  object={result.objects ? result.objects : null}
+                  open={false}
+                  resultType={'item'}
+                  description={result.description.item.scopeAndContentNote}
+                  title={result.description.item.title}
+                  naid={result.description.item.naId}
+                  tag={result.description.item.generalRecordsTypeArray.generalRecordsType.termName}
+                  date={result.description.item.productionDateArray? result.description.item.productionDateArray.proposableQualifiableDate.logicalDate : null}
                 />
               )
             }
