@@ -43,6 +43,7 @@ class App extends React.Component {
     return (
       <div>
         <Header text={'Finding Aids: ' + this.state.pageTitle}/>
+        <div>
           {this.state.results.map((result, index) => {
             if(this.state.resultType === "recordGroup") {
               return (
@@ -68,7 +69,17 @@ class App extends React.Component {
               )
             }
           })}
+          </div>
           <button onClick={this.handleClick}>Load More</button>
+          <style jsx>{`
+            div div {
+              display: flex;
+              flex-direction: column;
+              flex-wrap: wrap;
+              padding: 10px;
+              height: 1000px;
+            }
+            `}</style>
       </div>
     );
   }
