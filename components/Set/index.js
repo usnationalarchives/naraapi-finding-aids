@@ -3,6 +3,105 @@ import {Fragment} from 'react';
 import Link from 'next/link'
 import PropTypes from 'prop-types';
 
+const SetImage = ({image, alt, onclick}) => {
+  return(
+    //onClick={this.toggleOpen}
+    <Fragment>
+      <img  src={image} alt={alt} onClick={onclick}/>
+      <style jsx>{`
+        img {
+          width:300px;
+        }
+      `}</style>
+    </Fragment>
+  );
+}
+
+const SetInfo = ({recordType, recordNumber, childRecords}) => {
+  return(
+    //onClick={this.toggleOpen}
+    <aside>
+      {/* Record Group */}
+      <span>Record Group {recordNumber}</span> | 
+      {/* Series */}
+      {recordType == 'recordGroup' ? 
+        (<span> {childRecords} Record Groups</span>) :
+        (<span> {childRecords} Series</span>)
+      }
+      <style jsx>{`
+        aside {
+          width: 300px;
+          text-transform: uppercase;
+        }
+      `}</style>
+    </aside>
+  );
+}
+
+const SetTop = ({state, props, onclick}) => {
+  return(
+    <div>
+      <SetImage image={state.image} alt={props.title} onclick={onclick}/>
+      <div>
+        <h2>{props.title}</h2>
+        <p>{state.description}</p>
+      </div>
+    </div>
+  );
+}
+
+const SetBottom = ({state, props}) => {
+  let path_name;
+  let query_key;
+
+  if(props.resultType == 'recordGroup') {
+    query_key = 'recordGroup';
+    path_name = 'record-group';
+  } else {
+    query_key = 'series';
+    path_name = 'series';
+  }
+  const scoped = resolveScopedStyles(
+    <scope>
+      <style jsx>{`
+        .link:link {
+          color:#0071bc;
+        }
+        .link:visited {
+          color:#4c2c92;
+        }
+        .link:focus {
+          outline:2px dotted #aeb0b5;
+          outline-offset:3px;
+        }
+        .link:hover,
+        .link:active {
+          color:#205493;
+        }
+      `}</style>
+    </scope>
+  )
+
+  function resolveScopedStyles(scope) {
+    return {
+      className: scope.props.className,
+      styles: scope.props.children
+    }
+  }
+  return(
+    <div>
+      <SetInfo recordType={state.resultType} recordNumber={props.setNumber} childRecords={props.setChildren} />
+      <Link 
+          href={{ pathname: '/' + path_name, query: {id: props.setNumber}}}>
+          <a className={`link ${scoped.className}`}>View {query_key}</a>
+        </Link>
+        {scoped.styles}
+    </div>
+  );
+}
+
+
+
 class Set extends React.Component {
 
   constructor(props) {
@@ -10,9 +109,10 @@ class Set extends React.Component {
     this.state = {
       open: props.open,
       image: '/static/placeholder.png',
-      resultType: props.resultType
+      resultType: props.resultType,
+      description: 'Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Sed porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi.'
     }
-    
+    this.toggleOpen = this.toggleOpen.bind(this)
   }
 
   componentDidMount() {
@@ -24,60 +124,27 @@ class Set extends React.Component {
     }
     fetch(api)
     .then(response => response.json())
-    .then(data => this.setState({image: data.opaResponse.results.result[0].objects.object.file['@url']})
+    .then(data => this.setState({image: data.opaResponse.results.result[0].objects ? data.opaResponse.results.result[0].objects.object.file['@url'] : '/static/placeholder.png'})
       
     );
   }
 
-  render() {
-    let path_name;
-    let query_key;
-
-  if(this.props.resultType == 'recordGroup') {
-    query_key = 'recordGroup';
-    path_name = 'record-group';
-  } else {
-    query_key = 'series';
-    path_name = 'series';
+  toggleOpen() {
+    this.setState({open: !this.state.open})
   }
-    const scoped = resolveScopedStyles(
-      <scope>
-        <style jsx>{`
-          .link:link {
-            color:#0071bc;
-          }
-          .link:visited {
-            color:#4c2c92;
-          }
-          .link:focus {
-            outline:2px dotted #aeb0b5;
-            outline-offset:3px;
-          }
-          .link:hover,
-          .link:active {
-            color:#205493;
-          }
-        `}</style>
-      </scope>
-    )
-  
-    function resolveScopedStyles(scope) {
-      return {
-        className: scope.props.className,
-        styles: scope.props.children
-      }
-    }
+
+  render() {
     return(
       <div>
-        <h2>{this.props.title}</h2>
-        <img src={this.state.image} alt={this.props.title} />
-        <Link 
-          href={{ pathname: '/' + path_name, query: {id: this.props.setNumber}}}>
-          <a className={`link ${scoped.className}`}>View {query_key}</a>
-        </Link>
-        <p>Number: {this.props.setNumber}</p>
-        <p>Number of Children: {this.props.setChildren}</p>
-        {scoped.styles}
+        {!this.state.open &&
+          <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} />
+        }
+        {this.state.open &&
+          <Fragment>
+            <SetTop state={this.state} props={this.props} onclick={() => this.toggleOpen()} />
+            <SetBottom state={this.state} props={this.props} />
+          </Fragment>
+        }
         <style jsx>{`
           @import url('https://fonts.googleapis.com/css?family=Merriweather');
           h2 {
@@ -97,9 +164,6 @@ class Set extends React.Component {
           }
           div:nth-child(3n) {
             background:#dce4ef;
-          }
-          img {
-            width:300px;
           }
         `}</style>
       </div>

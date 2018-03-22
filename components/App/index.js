@@ -5,6 +5,7 @@ import Header from '../Header';
 import Set from '../Set';
 import Item from '../Item';
 import FindingAids from '../FindingAids';
+import Breadcrumb from '../Breadcrumb';
 
 class App extends React.Component {
 
@@ -22,17 +23,16 @@ class App extends React.Component {
   }
 
   handleClick(event) {
+    //add check to see if nextCursorMark is undefined or we ran out of pages
     let api = 'https://catalog.archives.gov/api/v1?';
     if(this.state.resultType === 'recordGroup') {
       api += 'resultTypes=recordGroup&rows=50&cursorMark=' + this.state.cursorMark;
     } else {
       api += 'resultTypes=series&description.series.parentRecordGroup.recordGroupNumber='+ this.props.query + '&rows=50&cursorMark=' + this.state.cursorMark;
     }
-    console.log(api)
     fetch(api)
-    .then(response => response.json())
-    .then(data => this.setState({results: this.state.results.concat(data.opaResponse.results.result), cursorMark: data.opaResponse.results.nextCursorMark})
-      
+      .then(response => response.json())
+      .then(data => this.setState({results: this.state.results.concat(data.opaResponse.results.result), cursorMark: data.opaResponse.results.nextCursorMark})
     );
   }
 
@@ -43,7 +43,11 @@ class App extends React.Component {
     return (
       <div>
         <Header text={'Finding Aids: ' + this.state.pageTitle}/>
-        <div>
+        <Breadcrumb 
+            recordGroup={this.props.query}
+            series={null}
+            records={this.props.totalResults}
+          />
           {this.state.results.map((result, index) => {
             if(this.state.resultType === "recordGroup") {
               return (
@@ -69,7 +73,6 @@ class App extends React.Component {
               )
             }
           })}
-          </div>
           <button onClick={this.handleClick}>Load More</button>
           <style jsx>{`
             div div {
