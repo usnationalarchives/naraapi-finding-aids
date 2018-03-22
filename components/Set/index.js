@@ -31,7 +31,7 @@ class Set extends React.Component {
 
   render() {
     let path_name;
-  let query_key;
+    let query_key;
 
   if(this.props.resultType == 'recordGroup') {
     query_key = 'recordGroup';
@@ -79,16 +79,27 @@ class Set extends React.Component {
         <p>Number of Children: {this.props.setChildren}</p>
         {scoped.styles}
         <style jsx>{`
+          @import url('https://fonts.googleapis.com/css?family=Merriweather');
+          h2 {
+            font-family:"Merriweather", serif;
+            font-weight:700;
+            font-size:20px;
+            line-height:35px;
+            margin: 0 0 20px;
+          }
           div {
             background:#f1f1f1;
-            margin-bottom:20px;
             padding:20px;
+            max-width: 400px;
+            display: inline-block;
+            margin: 10px;
+            width: 100%;
           }
-          div:nth-child(odd) {
+          div:nth-child(3n) {
             background:#dce4ef;
           }
           img {
-            width: 300px;
+            width:300px;
           }
         `}</style>
       </div>
