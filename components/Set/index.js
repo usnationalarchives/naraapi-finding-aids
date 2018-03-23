@@ -30,8 +30,8 @@ const SetInfo = ({recordType, recordNumber, childRecords}) => {
       }
       <style jsx>{`
         aside {
-          width: 300px;
           text-transform: uppercase;
+          width: 300px;
         }
       `}</style>
     </aside>
@@ -65,18 +65,18 @@ const SetBottom = ({state, props}) => {
     <scope>
       <style jsx>{`
         .link:link {
-          color:#0071bc;
+          color: #0071bc;
         }
         .link:visited {
-          color:#4c2c92;
+          color: #4c2c92;
         }
         .link:focus {
-          outline:2px dotted #aeb0b5;
-          outline-offset:3px;
+          outline: 2px dotted #aeb0b5;
+          outline-offset: 3px;
         }
         .link:hover,
         .link:active {
-          color:#205493;
+          color: #205493;
         }
       `}</style>
     </scope>
@@ -148,22 +148,22 @@ class Set extends React.Component {
         <style jsx>{`
           @import url('https://fonts.googleapis.com/css?family=Merriweather');
           h2 {
-            font-family:"Merriweather", serif;
-            font-weight:700;
-            font-size:20px;
-            line-height:35px;
+            font-family: "Merriweather", serif;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 35px;
             margin: 0 0 20px;
           }
           div {
-            background:#f1f1f1;
-            padding:20px;
+            background: #f1f1f1;
+            padding: 20px;
             max-width: 400px;
             display: inline-block;
             margin: 10px;
             width: 100%;
           }
           div:nth-child(3n) {
-            background:#dce4ef;
+            background: #dce4ef;
           }
         `}</style>
       </div>
