@@ -17,8 +17,6 @@ class FilterForm extends React.Component {
     }
   }
 
-  
-
   render() {
     return(
       <div>

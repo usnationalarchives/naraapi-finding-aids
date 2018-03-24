@@ -59,14 +59,22 @@ class App extends React.Component {
       .then(data => this.setState({
         results: data.opaResponse.results.result,
         cursorMark: data.opaResponse.results.nextCursorMark,
-        allResult: data.opaResponse
+        allResult: data.opaResponse,
+        filterKeys: filteredKeys,
+        filtered: true
       })
     );
   }
 
   handleClick(event) {
     //add check to see if nextCursorMark is undefined or we ran out of pages
-    const apiReq = getApiRequest({resultType: this.state.resultType, cursorMark: this.state.cursorMark, queryId: this.props.query});
+    const apiReq = getApiRequest({
+      resultType: this.state.resultType,
+      cursorMark: this.state.cursorMark,
+      queryId: this.props.query,
+      filtered: true,
+      filterLocation: filteredKeys
+    });
     
     fetch(apiReq)
       .then(response => response.json())
