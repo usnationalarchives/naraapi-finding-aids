@@ -95,12 +95,12 @@ class Item extends React.Component {
             width: 300px;
           }
           div {
-            background:#f1f1f1;
-            margin-bottom:20px;
-            padding:20px;
+            background: #f1f1f1;
+            margin-bottom: 20px;
+            padding: 20px;
           }
           div:nth-child(odd) {
-            background:#dce4ef;
+            background: #dce4ef;
           }
         `}</style>
       </div>
