@@ -3,80 +3,138 @@ import {Fragment} from 'react';
 import Link from 'next/link'
 import PropTypes from 'prop-types';
 
-const SetImage = ({image, alt, onclick}) => {
+const SetImage = ({image, alt, onclick, isFetching}) => {
   return(
     //onClick={this.toggleOpen}
-    <Fragment>
-      <img  src={image} alt={alt} onClick={onclick}/>
+    <div>
+      {!isFetching &&
+        <img  src={image} alt={alt} onClick={onclick}/>
+      }
       <style jsx>{`
         img {
           width:300px;
+          min-width:300px;
+          height:300px;
         }
       `}</style>
-    </Fragment>
+      <style jsx>{`
+        div {
+          width:300px;
+          min-width:300px;
+          height:300px;
+          animation-duration: 2s;
+          animation-fill-mode: forwards;
+          animation-iteration-count: infinite;
+          animation-name: shimmerBackground;
+          animation-timing-function: linear;
+          background: #f6f7f8;
+          background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+          background-size: 800px 104px;
+          position: relative;
+        }
+        @keyframes shimmerBackground {
+          0%{
+            background-position: -468px 0
+        }
+        100%{
+            background-position: 468px 0
+        }
+      }
+      `}</style>
+    </div>
   );
 }
 
-const SetInfo = ({recordType, recordNumber, childRecords}) => {
+const SetInfo = ({recordType, recordNumber, childRecords, isOpen}) => {
   return(
     //onClick={this.toggleOpen}
     <aside>
-      {/* Record Group */}
-      <span>Record Group {recordNumber}</span> | 
-      {/* Series */}
       {recordType == 'recordGroup' ? 
-        (<span> {childRecords} Record Groups</span>) :
-        (<span> {childRecords} Series</span>)
+        (<span> Record Group {recordNumber} </span>) :
+        (<span> Series {recordNumber} </span>)
+      }
+      |
+      {recordType == 'recordGroup' ? 
+        (<span> {childRecords} Series</span>) :
+        (<span> {childRecords} Items</span>)
       }
       <style jsx>{`
         aside {
           text-transform: uppercase;
+          letter-spacing: 1px;
           width: 300px;
+          padding: 10px 0;
+        }
+      `}</style>
+      <style jsx>{`
+        aside {
+          color: ${isOpen ? '#ffffff' : '#212121'}
         }
       `}</style>
     </aside>
   );
 }
 
-const SetTop = ({state, props, onclick}) => {
+const SetLeft = ({state, props, onclick}) => {
   return(
     <div>
       <SetImage image={state.image} alt={props.title} onclick={onclick}/>
-      <div>
-        <h2>{props.title}</h2>
-        <p>{state.description}</p>
-      </div>
+      <SetInfo recordType={state.resultType} recordNumber={props.setNumber} childRecords={props.setChildren} isOpen={state.open}/>
+      <style jsx>{`
+        div {
+          display: flex;
+          flex-direction: column;
+        }
+      `}</style>
     </div>
   );
 }
 
-const SetBottom = ({state, props}) => {
+const SetRight = ({state, props}) => {
   let path_name;
-  let query_key;
+  let linkLabel;
 
   if(props.resultType == 'recordGroup') {
-    query_key = 'recordGroup';
+    linkLabel = 'Record Group';
     path_name = 'record-group';
   } else {
-    query_key = 'series';
+    linkLabel = 'Series';
     path_name = 'series';
   }
   const scoped = resolveScopedStyles(
     <scope>
       <style jsx>{`
-        .link:link {
-          color: #0071bc;
-        }
+        .link:link,
         .link:visited {
-          color: #4c2c92;
+          color: #ffffff;
+          font-weight: bold;
+          text-decoration: none;
+          position: relative;
+          display: block;
+          align-self:flex-start;
+          padding-right: 15px;
         }
+        .link:after {
+          content: ">";
+          position: absolute;
+          right: 0;
+          top: 0;
+          transition: right .5s;
+        }
+        
         .link:focus {
           outline: 2px dotted #aeb0b5;
           outline-offset: 3px;
         }
         .link:hover,
         .link:active {
-          color: #205493;
+          color: #fad980;
+        }
+
+        .link:hover:after,
+        .link:active:after {
+          right: -5px;
+          color: #fad980;
         }
       `}</style>
     </scope>
@@ -90,12 +148,25 @@ const SetBottom = ({state, props}) => {
   }
   return(
     <div>
-      <SetInfo recordType={state.resultType} recordNumber={props.setNumber} childRecords={props.setChildren} />
+      <h2>{props.title}</h2>
+      <p>{state.description}</p>
       <Link 
           href={{ pathname: '/' + path_name, query: {id: props.setNumber}}}>
-          <a className={`link ${scoped.className}`}>View {query_key}</a>
+          <a className={`link ${scoped.className}`}>View {linkLabel}</a>
         </Link>
         {scoped.styles}
+        <style jsx>{`
+          div {
+            display: flex;
+            flex-direction: column;
+            padding: 5px 20px 10px;
+          }
+        `}</style>
+        <style jsx>{`
+        div {
+          color: ${state.open ? '#ffffff' : '#212121'}
+        }
+      `}</style>
     </div>
   );
 }
@@ -110,12 +181,14 @@ class Set extends React.Component {
       open: props.open,
       image: '/static/placeholder.png',
       resultType: props.resultType,
-      description: 'Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Sed porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Pellentesque in ipsum id orci porta dapibus. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi.'
+      description: '',
+      isFetching: true
     }
     this.toggleOpen = this.toggleOpen.bind(this)
   }
 
   componentDidMount() {
+    // Set an isfetching state during the call so the user knows something is happening
     let api = 'https://catalog.archives.gov/api/v1?resultTypes=object&objects.object.file.@mime_is=image/jpeg&rows=1';
     if(this.state.resultType === 'recordGroup') {
       api += '&description.item.parentSeries.parentRecordGroup=' + this.props.setNumber;
@@ -124,7 +197,10 @@ class Set extends React.Component {
     }
     fetch(api)
     .then(response => response.json())
-    .then(data => this.setState({image: data.opaResponse.results.result[0].objects ? data.opaResponse.results.result[0].objects.object.file['@url'] : '/static/placeholder.png'})
+    .then(data => this.setState({
+      image: data.opaResponse.results.result[0].objects ? data.opaResponse.results.result[0].objects.object.file['@url'] : '/static/placeholder.png',
+      isFetching: false
+    })
       
     );
   }
@@ -137,12 +213,12 @@ class Set extends React.Component {
     return(
       <div>
         {!this.state.open &&
-          <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} />
+          <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} />
         }
         {this.state.open &&
           <Fragment>
-            <SetTop state={this.state} props={this.props} onclick={() => this.toggleOpen()} />
-            <SetBottom state={this.state} props={this.props} />
+            <SetLeft state={this.state} props={this.props} onclick={() => this.toggleOpen()} />
+            <SetRight state={this.state} props={this.props} />
           </Fragment>
         }
         <style jsx>{`
@@ -155,16 +231,16 @@ class Set extends React.Component {
             margin: 0 0 20px;
           }
           div {
-            background: #f1f1f1;
             padding: 20px;
-            max-width: 400px;
-            display: inline-block;
+            display: block;
+            display: flex;
+            flex-direction: row;
             margin: 10px;
-            width: 100%;
           }
-          div:nth-child(3n) {
-            background: #dce4ef;
-          }
+        `}</style>
+        <style jsx>{`
+          max-width: ${this.state.open ? 800 + 'px' : 400 + 'px'};
+          background: ${this.state.open ? '#494440' : '#e4e2e0'};
         `}</style>
       </div>
     )

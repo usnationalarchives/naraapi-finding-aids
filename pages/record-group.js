@@ -4,12 +4,14 @@ import Link from 'next/link'
 import 'isomorphic-unfetch'
 
 import App from '../components/App';
+import {getApiRequest} from '../components/getApiReq';
 
 export default class RecordGroup extends React.Component {
   
   static async getInitialProps ({ pathname, query }) {
     // eslint-disable-next-line no-undef
-    const res = await fetch('https://catalog.archives.gov/api/v1?resultTypes=series&description.series.parentRecordGroup.recordGroupNumber='+ query.id + '&rows=50&cursorMark=*')
+    let apiReq = getApiRequest({resultType: 'series', queryId: query.id});
+    const res = await fetch(apiReq)
     const json = await res.json();
     // Return Number of Results to display in header.
     return { data: json.opaResponse.results, query: query.id }
@@ -30,6 +32,7 @@ export default class RecordGroup extends React.Component {
         cursorMark={this.props.data.nextCursorMark}
         totalResults={this.props.data.total}
         query={this.props.query}
+        filtered={false}
       />
     )
   }

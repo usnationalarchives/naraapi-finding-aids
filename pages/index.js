@@ -3,11 +3,13 @@ import Link from 'next/link';
 
 import 'isomorphic-unfetch';
 import App from '../components/App';
+import {getApiRequest} from '../components/getApiReq';
 
 export default class Index extends React.Component {
   static async getInitialProps () {
     // eslint-disable-next-line no-undef
-    const res = await fetch('https://catalog.archives.gov/api/v1?resultTypes=recordGroup&rows=50&cursorMark=*')
+    let apiReq = getApiRequest({resultType: 'recordGroup'});
+    const res = await fetch(apiReq)
     const json = await res.json()
 
     return { data: json.opaResponse.results}
@@ -26,6 +28,7 @@ export default class Index extends React.Component {
         currentResults={resultsArray}
         cursorMark={this.props.data.nextCursorMark}
         totalResults={this.props.data.total}
+        filtered={false}
       />
     )
   }

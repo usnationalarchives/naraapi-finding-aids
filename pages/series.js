@@ -3,13 +3,15 @@ import Link from 'next/link'
 
 import 'isomorphic-unfetch'
 import App from '../components/App';
+import {getApiRequest} from '../components/getApiReq';
 
 export default class Series extends React.Component {
   
   static async getInitialProps ({ pathname, query }) {
     
     // eslint-disable-next-line no-undef
-    const res = await fetch('https://catalog.archives.gov/api/v1?resultTypes=item&description.item.parentSeries.naId_is='+ query.id  + '&rows=50&cursorMark=*')
+    let apiReq = getApiRequest({resultType: 'item', queryId: query.id});
+    const res = await fetch(apiReq)
     const json = await res.json()
     return { data: json.opaResponse.results, query: query.id }
   }
@@ -23,6 +25,7 @@ export default class Series extends React.Component {
         cursorMark={this.props.data.nextCursorMark}
         totalResults={this.props.data.total}
         query={this.props.query}
+        filtered={false}
       />
     )
   }
