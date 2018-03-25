@@ -19,6 +19,15 @@ export function getApiRequest(apiReqObj) {
   apiLink += apiReqObj.rows ? ('&rows=' + apiReqObj.rows) : ('&rows=' + defaultRows);
   apiLink += apiReqObj.cursorMark ? ('&cursorMark=' + apiReqObj.cursorMark) : ('&cursorMark=' + defaultCursorMark);
 
+  if(apiReqObj.resultType === 'recordGroup') {
+    console.log(apiReqObj)
+    if(apiReqObj.filtered === true && apiReqObj.filterLocation) {
+      
+      apiLink += '&description.recordGroup.referenceUnitArray.referenceUnit.naId=' + apiReqObj.filterLocation;
+      console.log(apiLink)
+    }
+  }
+
   if(apiReqObj.resultType === 'series') {
     apiLink += '&description.series.parentRecordGroup.recordGroupNumber=' + apiReqObj.queryId;
     if(apiReqObj.filtered === true && apiReqObj.filterLocation) {
@@ -28,10 +37,13 @@ export function getApiRequest(apiReqObj) {
 
   if(apiReqObj.resultType === 'item') {
     apiLink += '&description.item.parentSeries.naId_is=' + apiReqObj.queryId;
+    if(apiReqObj.filtered === true && apiReqObj.filterLocation) {
+      apiLink += '&description.series.physicalOccurrenceArray.seriesPhysicalOccurrence.referenceUnitArray.referenceUnit.naId=' + apiReqObj.filterLocation
+    }
   }
 
   console.log(apiReqObj.filtered, apiReqObj.filterLocation)
-console.log(apiLink)
+  console.log(apiLink)
 
   return apiLink;
 }

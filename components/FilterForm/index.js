@@ -13,15 +13,12 @@ class FilterForm extends React.Component {
     super(props);
     this.state = {
       open: false,
-
     }
   }
 
   render() {
     return(
       <div>
-        <button>Filter</button>
-        <button>Search</button>
         <form>
           <fieldset>
             <legend>File Type</legend>
@@ -83,8 +80,9 @@ class FilterForm extends React.Component {
                 );
               })}
             </ul>
-            <button onClick={this.props.handleFilterSubmit}>Apply</button>
+            
           </fieldset>
+          <button onClick={this.props.handleFilterSubmit}>Apply</button>
         </form>
         {/* <style jsx>{`
           div {

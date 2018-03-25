@@ -3,49 +3,9 @@ import {Fragment} from 'react';
 import Link from 'next/link'
 import PropTypes from 'prop-types';
 
-const ItemOnline = () => (
-  <span>Online</span>
-)
-
-const ItemHeader = ({title, description, tag, date}) => {
-  let dateFormatted;
-  if(date) {
-    let newDate = new Date(date);
-    dateFormatted = (newDate.getMonth() + 1) + '.' + newDate.getDate() + '.' +  newDate.getFullYear();
-  }
-
-  return(
-    <div>
-      <h3>{title}</h3>
-      <div>{tag} {dateFormatted }
-      </div>
-      <p>{description}</p>
-    </div>
-  )
-}
-
-const ItemImage = ({object, alt}) => {
-  let imgUrl;
-  if (object) {
-    if (Array.isArray(object.object)) {
-      imgUrl = object.object[0].file['@url'];
-    } else {
-      imgUrl = object.object.file['@url'];
-    }
-  }
-
-  return(
-    <Fragment>
-      <img src={imgUrl} alt={alt} />
-      <style jsx>{`
-        img {
-          width:300px;
-        }
-      `}</style>
-    </Fragment>
-  )
-}
-
+import ItemImage from './ItemImage';
+import OnlineBanner from './OnlineBanner';
+import ItemHeader from './ItemHeader';
 
 
 class Item extends React.Component {
@@ -71,7 +31,7 @@ class Item extends React.Component {
     return (
       <div onMouseEnter={this.toggleOverlayOn} onMouseLeave={this.toggleOverlayOff}>
         {this.props.object &&
-          <ItemOnline />
+          <OnlineBanner />
         }
         {this.props.object &&
           <ItemImage object={this.props.object} alt={this.props.title} />
@@ -96,8 +56,9 @@ class Item extends React.Component {
           }
           div {
             background: #f1f1f1;
-            margin-bottom: 20px;
-            padding: 20px;
+            margin: 10px;
+            width: 300px;
+            position: relative;
           }
           div:nth-child(odd) {
             background: #dce4ef;

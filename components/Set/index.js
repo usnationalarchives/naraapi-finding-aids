@@ -49,8 +49,8 @@ class Set extends React.Component {
         }
         {this.state.open &&
           <Fragment>
-            <SetLeft state={this.state} props={this.props} onclick={() => this.toggleOpen()} />
-            <SetRight state={this.state} props={this.props} />
+            <SetLeft state={this.state} props={this.props}  />
+            <SetRight state={this.state} props={this.props} onclick={() => this.toggleOpen()}/>
           </Fragment>
         }
         <style jsx>{`

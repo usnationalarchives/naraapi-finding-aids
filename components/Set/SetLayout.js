@@ -3,11 +3,12 @@ import Link from 'next/link'
 
 import SetImage from './SetImage';
 import SetInfo from './SetInfo';
+import Button from '../Button';
 
-export const SetLeft = ({state, props, onclick}) => {
+export const SetLeft = ({state, props}) => {
   return(
     <div>
-      <SetImage image={state.image} alt={props.title} onclick={onclick}/>
+      <SetImage image={state.image} alt={props.title} />
       <SetInfo recordType={state.resultType} recordNumber={props.setNumber} childRecords={props.setChildren} isOpen={state.open}/>
       <style jsx>{`
         div {
@@ -19,7 +20,7 @@ export const SetLeft = ({state, props, onclick}) => {
   );
 }
 
-export const SetRight = ({state, props}) => {
+export const SetRight = ({state, props, onclick}) => {
   let path_name;
   let linkLabel;
 
@@ -77,9 +78,10 @@ export const SetRight = ({state, props}) => {
   }
   return(
     <div>
+      <Button onClick={onclick} text={'Close'}></Button>
       <h2>{props.title}</h2>
       <p>{state.description}</p>
-      <Link 
+        <Link 
           href={{ pathname: '/' + path_name, query: {id: props.setNumber}}}>
           <a className={`link ${scoped.className}`}>View {linkLabel}</a>
         </Link>

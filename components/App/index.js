@@ -10,6 +10,7 @@ import Breadcrumb from '../Breadcrumb';
 import FilterForm from '../FilterForm';
 import SearchForm from '../SearchForm';
 import {getApiRequest} from '../getApiReq';
+import Button from '../Button';
 
 import Head from 'next/head';
 
@@ -24,7 +25,8 @@ class App extends React.Component {
       currentResults: props.currentResults,
       cursorMark: props.cursorMark,
       offset: props.offset,
-      filtered: props.filtered
+      filtered: props.filtered,
+      filteredKeys: null
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
@@ -42,16 +44,21 @@ class App extends React.Component {
 
   handleFilterSubmit(event) {
     event.preventDefault();
-    
-    const keys = Object.keys(this.state.locationFilter);
-    const filteredKeys = keys.filter((key) => {return this.state.locationFilter[key]}).join()
+    let filteredKeys;
+    if(this.state.locationFilter) {
+      console.log(this.state.locationFilter)
+      const keys = Object.keys(this.state.locationFilter);
+      filteredKeys = keys.filter((key) => {return this.state.locationFilter[key]}).join()
+    } else {
+      filteredKeys = null
+    }
 
     const apiReq = getApiRequest({
       resultType: this.state.resultType,
       cursorMark: this.state.cursorMark,
       queryId: this.props.query,
       filtered: true,
-      filterLocation: filteredKeys
+      filterKeys: filteredKeys
     });
 
     fetch(apiReq)
@@ -67,20 +74,30 @@ class App extends React.Component {
   }
 
   handleClick(event) {
+    let filteredKeys
+    if(this.state.locationFilter) {
+      const keys = Object.keys(this.state.locationFilter);
+      filteredKeys = keys.filter((key) => {return this.state.locationFilter[key]}).join()
+    } else {
+      filteredKeys = {}
+    }
+    
     //add check to see if nextCursorMark is undefined or we ran out of pages
     const apiReq = getApiRequest({
       resultType: this.state.resultType,
       cursorMark: this.state.cursorMark,
       queryId: this.props.query,
       filtered: true,
-      filterLocation: filteredKeys
+      filterKeys: filteredKeys
     });
     
     fetch(apiReq)
       .then(response => response.json())
       .then(data => this.setState({
         results: this.state.results.concat(data.opaResponse.results.result),
-        cursorMark: data.opaResponse.results.nextCursorMark
+        cursorMark: data.opaResponse.results.nextCursorMark,
+        filtered: true,
+        filterKeys: filteredKeys
       })
     );
   }
@@ -142,8 +159,9 @@ class App extends React.Component {
                 )
               }
             })}
+            <Button onClick={this.handleClick} text={'Load More'} />
           </section>
-          <button onClick={this.handleClick}>Load More</button>
+          
           <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit}/>
           <SearchForm />
           <style jsx>{`
@@ -154,26 +172,7 @@ class App extends React.Component {
               height: 75vw;
             }
 
-            button {
-              background: #0071bc;
-              border: 0;
-              border-radius: 5px;
-              color: #ffffff;
-              cursor: pointer;
-              font-size: 14px;
-              font-weight: 700;
-              padding: 10px 20px;
-            }
-            button:hover {
-              background: #205493;
-            }
-            button:active {
-              background: #112e51;
-            }
-            button:focus {
-              outline: 2px dotted #aeb0b5;
-              outline-offset: 3px;
-            }
+
             
             `}</style>
       </div>
