@@ -80,11 +80,19 @@ export const SetRight = ({state, props, onclick}) => {
     <div>
       <Button onClick={onclick} text={'Close'}></Button>
       <h2>{props.title}</h2>
-      <p>{state.description}</p>
-        <Link 
-          href={{ pathname: '/' + path_name, query: {id: props.setNumber}}}>
+      <p>{props.description}</p>
+        {props.setChildren > 0 &&
+          <Link href={{ pathname: '/' + path_name, query: {id: props.setNumber}}}>
           <a className={`link ${scoped.className}`}>View {linkLabel}</a>
-        </Link>
+          </Link>
+        }
+        {props.setChildren == 0 &&
+          <ul>
+            <li><span>Size: </span>{props.physicalResult.extent}</li>
+            <li><span>Holding Type: </span>{props.physicalResult.holdingsMeasurementArray.holdingsMeasurement.type.termName}</li>
+            <li><span>Count: </span>{props.physicalResult.holdingsMeasurementArray.holdingsMeasurement.count}</li>
+          </ul>
+        }
         {scoped.styles}
         <style jsx>{`
           div {

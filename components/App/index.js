@@ -141,6 +141,8 @@ class App extends React.Component {
                     setChildren={Number(result.description.series.itemCount)}
                     setNumber={Number(result.description.series.naId)}
                     title={result.description.series.title}
+                    description={result.description.series.scopeAndContentNote}
+                    physicalResult={result.description.series.physicalOccurrenceArray.seriesPhysicalOccurrence}
                   />
                 )
               } else {
