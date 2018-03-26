@@ -26,6 +26,7 @@ export default class RecordGroup extends React.Component {
     return (
       <App 
         pageTitle={this.props.data.result[0].description.series.parentRecordGroup.title}
+        recordGroup={this.props.query}
         resultType={'series'}
         data={this.props.data.result}
         currentResults={resultsArray}

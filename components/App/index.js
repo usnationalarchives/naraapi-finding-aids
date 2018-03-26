@@ -115,8 +115,8 @@ class App extends React.Component {
         </Head>
         <Header text={'Finding Aids: ' + this.state.pageTitle}/>
         <Breadcrumb 
-            recordGroup={this.props.query}
-            series={null}
+            recordGroup={this.props.recordGroup}
+            series={this.props.resultType == 'items' ? this.props.query : null}
             records={this.props.totalResults}
           />
           <section>
