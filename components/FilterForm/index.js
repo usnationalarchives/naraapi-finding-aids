@@ -1,12 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const locationIds = [ // Full list of ~50 on section 9.2
-  {name: "William J. Clinton Library", id: 1},
-  {name: "Dwight D. Eisenhower Library", id: 2},
-  {name: "Franklin D. Roosevelt Library", id: 3},
-  {name: "National Archives at Philadelphia", id: 17},
-];
+import {locationIds} from '../filterTypes';
 
 class FilterForm extends React.Component {
   constructor(props) {
@@ -20,7 +15,7 @@ class FilterForm extends React.Component {
     return(
       <div>
         <form>
-          <fieldset>
+          {/* <fieldset>
             <legend>File Type</legend>
             <ul>
               <li><label>
@@ -60,7 +55,7 @@ class FilterForm extends React.Component {
                 Document
               </label></li>
             </ul>
-          </fieldset>
+          </fieldset> */}
           <fieldset>
             <legend>Location</legend>
             <ul>

@@ -26,11 +26,17 @@ class App extends React.Component {
       cursorMark: props.cursorMark,
       offset: props.offset,
       filtered: props.filtered,
-      filteredKeys: null
+      filteredKeys: null,
+      filterOpen: false
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
+    this.openFilter = this.openFilter.bind(this);
+  }
+
+  openFilter() {
+    this.setState({filterOpen: !this.state.filterOpen})
   }
 
   handleLocationChange(event) {
@@ -58,18 +64,30 @@ class App extends React.Component {
       cursorMark: this.state.cursorMark,
       queryId: this.props.query,
       filtered: true,
-      filterKeys: filteredKeys
+      filterLocation: filteredKeys,
+      cursorMark: '*'
     });
 
     fetch(apiReq)
       .then(response => response.json())
-      .then(data => this.setState({
-        results: data.opaResponse.results.result,
-        cursorMark: data.opaResponse.results.nextCursorMark,
-        allResult: data.opaResponse,
-        filterKeys: filteredKeys,
-        filtered: true
-      })
+      .then(data => {
+        console.log(data);
+        if(data.opaResponse.results.total > 0) {
+          this.setState({
+            results: data.opaResponse.results.result,
+            cursorMark: data.opaResponse.results.nextCursorMark,
+            allResult: data.opaResponse,
+            filterKeys: filteredKeys,
+            filtered: true
+          });
+        } else {
+          this.setState({
+            noResults: true,
+            results: null
+          })
+        }
+
+      }
     );
   }
 
@@ -88,7 +106,7 @@ class App extends React.Component {
       cursorMark: this.state.cursorMark,
       queryId: this.props.query,
       filtered: true,
-      filterKeys: filteredKeys
+      filterLocation: filteredKeys
     });
     
     fetch(apiReq)
@@ -106,6 +124,55 @@ class App extends React.Component {
     let setChildren;
     let setNumber;
     let componentTitle;
+    let mappedResults;
+    let moreButton;
+    if(this.state.results) {
+      mappedResults = this.state.results.map((result, index) => {
+        if(this.state.resultType === "recordGroup") {
+          return (
+            <Set
+              key={index}
+              open={false}
+              resultType={'recordGroup'}
+              setChildren={Number(result.description.recordGroup.seriesCount)}
+              setNumber={Number(result.description.recordGroup.recordGroupNumber)}
+              title={result.description.recordGroup.title}
+            />
+          )
+        } else if(this.state.resultType === "series") {
+          return (
+            <Set
+              key={index}
+              open={false}
+              resultType={'series'}
+              setChildren={Number(result.description.series.itemCount)}
+              setNumber={Number(result.description.series.naId)}
+              title={result.description.series.title}
+              description={result.description.series.scopeAndContentNote}
+              physicalResult={result.description.series.physicalOccurrenceArray.seriesPhysicalOccurrence}
+            />
+          )
+        } else {
+          return (
+            <Item
+              key={index}
+              object={result.objects ? result.objects : null}
+              open={false}
+              resultType={'item'}
+              description={result.description.item.scopeAndContentNote}
+              title={result.description.item.title}
+              naid={result.description.item.naId}
+              tag={result.description.item.generalRecordsTypeArray.generalRecordsType.termName}
+              date={result.description.item.productionDateArray? result.description.item.productionDateArray.proposableQualifiableDate.logicalDate : null}
+            />
+          )
+        }
+      })
+    }
+    if(this.state.cursorMark) {
+      moreButton = <Button onClick={this.handleClick} text={'Load More'} />;
+    }
+
     return (
       <div>
         <Head>
@@ -119,53 +186,24 @@ class App extends React.Component {
             series={this.props.resultType == 'items' ? this.props.query : null}
             records={this.props.totalResults}
           />
-          <section>
-            {this.state.results.map((result, index) => {
-              if(this.state.resultType === "recordGroup") {
-                return (
-                  <Set
-                    key={index}
-                    open={false}
-                    resultType={'recordGroup'}
-                    setChildren={Number(result.description.recordGroup.seriesCount)}
-                    setNumber={Number(result.description.recordGroup.recordGroupNumber)}
-                    title={result.description.recordGroup.title}
-                  />
-                )
-              } else if(this.state.resultType === "series") {
-                return (
-                  <Set
-                    key={index}
-                    open={false}
-                    resultType={'series'}
-                    setChildren={Number(result.description.series.itemCount)}
-                    setNumber={Number(result.description.series.naId)}
-                    title={result.description.series.title}
-                    description={result.description.series.scopeAndContentNote}
-                    physicalResult={result.description.series.physicalOccurrenceArray.seriesPhysicalOccurrence}
-                  />
-                )
-              } else {
-                return (
-                  <Item
-                    key={index}
-                    object={result.objects ? result.objects : null}
-                    open={false}
-                    resultType={'item'}
-                    description={result.description.item.scopeAndContentNote}
-                    title={result.description.item.title}
-                    naid={result.description.item.naId}
-                    tag={result.description.item.generalRecordsTypeArray.generalRecordsType.termName}
-                    date={result.description.item.productionDateArray? result.description.item.productionDateArray.proposableQualifiableDate.logicalDate : null}
-                  />
-                )
-              }
-            })}
-            <Button onClick={this.handleClick} text={'Load More'} />
-          </section>
           
-          <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit}/>
-          <SearchForm />
+            {this.state.results &&
+              <section>
+                {mappedResults}
+                {moreButton}
+              </section>
+            }
+            {this.state.noResults &&
+              <div>
+                <p>No results found, please try with fewer filters.</p>
+              </div>
+            }
+            
+          <Button onClick={this.openFilter} text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'} />
+          {this.state.filterOpen &&
+            <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit}/>
+          }
+
           <style jsx>{`
             section {
               display: flex;
@@ -173,9 +211,6 @@ class App extends React.Component {
               flex-wrap: wrap;
               height: 75vw;
             }
-
-
-            
             `}</style>
       </div>
     );

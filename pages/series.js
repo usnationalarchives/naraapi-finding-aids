@@ -21,7 +21,7 @@ export default class Series extends React.Component {
       <App 
         pageTitle={this.props.data.result[0].description.item.parentSeries.title}
         recordGroup={this.props.data.result[0].description.item.parentSeries.parentRecordGroup.recordGroupNumber}
-        resultType={'items'}
+        resultType={'item'}
         data={this.props.data.result}
         cursorMark={this.props.data.nextCursorMark}
         totalResults={this.props.data.total}
