@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SetImage = ({image, alt, onclick, isFetching}) => {
+const SetImage = ({image, alt, onclick, isFetching, visualSize}) => {
   return(
     //onClick={this.toggleOpen}
     <div>

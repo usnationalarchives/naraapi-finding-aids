@@ -35,6 +35,7 @@ class App extends React.Component {
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.openFilter = this.openFilter.bind(this);
     this.handleYearChange = this.handleYearChange.bind(this);
+    this.getSizeParam = this.getSizeParam.bind(this);
   }
 
   openFilter() {
@@ -127,6 +128,33 @@ class App extends React.Component {
     );
   }
 
+  getSizeParam(results) {
+    let min = 0;
+    let max = 0;
+    let total = 0;
+    let mean;
+    for(let i = 0; i < results.length; i++) {
+      let resultNumber;
+      if(results[i].description.recordGroup) {
+        resultNumber = Number(results[i].description.recordGroup.seriesCount);
+      }
+      if(min === 0 && i === 0) {
+        min = resultNumber;
+      }
+
+      if(min > resultNumber) {
+        min = resultNumber;
+      }
+
+      if(max < resultNumber) {
+        max = resultNumber;
+      }
+      total += resultNumber;
+    }
+    mean = total / Number(results.length);
+    return mean;
+  }
+
   render() {
     let setChildren;
     let setNumber;
@@ -134,8 +162,16 @@ class App extends React.Component {
     let mappedResults;
     let moreButton;
     if(this.state.results) {
+      const mean = this.getSizeParam(this.state.results);
+      console.log("mean /2 = " + mean / 2 + " mean = " + mean + " mean + (mean / 2) = " + (mean + (mean / 2)))
       mappedResults = this.state.results.map((result, index) => {
+        let visualSize = 'default';
         if(this.state.resultType === "recordGroup") {
+          if(Number(result.description.recordGroup.seriesCount) < (mean / 2)) {
+            visualSize = 'small'
+          } else if (Number(result.description.recordGroup.seriesCount) > (mean + (mean / 2))) {
+            visualSize = 'large'
+          }
           if(this.state.year && Number(result.description.recordGroup.inclusiveDates.inclusiveStartDate.year) < this.state.year) {
             <Set
                 key={index}
@@ -145,6 +181,7 @@ class App extends React.Component {
                 setNumber={Number(result.description.recordGroup.recordGroupNumber)}
                 title={result.description.recordGroup.title}
                 year={result.description.recordGroup.inclusiveDates.inclusiveStartDate.year}
+                visualSize={visualSize}
               />
           } else {
             return (
@@ -156,6 +193,7 @@ class App extends React.Component {
                 setNumber={Number(result.description.recordGroup.recordGroupNumber)}
                 title={result.description.recordGroup.title}
                 year={result.description.recordGroup.inclusiveDates.inclusiveStartDate.year}
+                visualSize={visualSize}
               />
             )
           }

@@ -42,12 +42,18 @@ class Set extends React.Component {
   }
 
   render() {
+    let visualSize = '350px';
+    if(this.props.visualSize === 'small') {
+      visualSize = '200px';
+    } else if (this.props.visualSize === 'large') {
+      visualSize = '500px';
+    }
     return(
       <div>
-        {this.props.year}
+        <aside>{this.props.year}</aside>
         {!this.state.open &&
           
-          <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} />
+          <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} size={visualSize} />
         }
         {this.state.open &&
           <Fragment>
@@ -70,10 +76,18 @@ class Set extends React.Component {
             display: flex;
             flex-direction: row;
             margin: 10px;
+            overflow: hidden;
+            position: relative;
+          }
+          aside {
+            position: absolute;
+            top: 0;
+            left: 0;
           }
         `}</style>
         <style jsx>{`
-          max-width: ${this.state.open ? 800 + 'px' : 400 + 'px'};
+          width: ${this.state.open ? 800 + 'px' : visualSize};
+          height: ${this.state.open ? 400 + 'px' : visualSize};
           background: ${this.state.open ? '#494440' : '#e4e2e0'};
         `}</style>
       </div>
