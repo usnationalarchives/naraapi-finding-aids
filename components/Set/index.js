@@ -44,7 +44,9 @@ class Set extends React.Component {
   render() {
     return(
       <div>
+        {this.props.year}
         {!this.state.open &&
+          
           <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} />
         }
         {this.state.open &&

@@ -113,7 +113,7 @@ class App extends React.Component {
       resultType: this.state.resultType,
       cursorMark: this.state.cursorMark,
       queryId: this.props.query,
-      filtered: true,
+      filtered: this.state.filtered,
       filterLocation: filteredKeys
     });
     
@@ -137,7 +137,7 @@ class App extends React.Component {
     if(this.state.results) {
       mappedResults = this.state.results.map((result, index) => {
         if(this.state.resultType === "recordGroup") {
-          if(this.state.year && Number(result.description.recordGroup.inclusiveDates.inclusiveStartDate.year) > this.state.year) {
+          if(this.state.year && Number(result.description.recordGroup.inclusiveDates.inclusiveStartDate.year) < this.state.year) {
             <Set
                 key={index}
                 open={false}
@@ -145,6 +145,7 @@ class App extends React.Component {
                 setChildren={Number(result.description.recordGroup.seriesCount)}
                 setNumber={Number(result.description.recordGroup.recordGroupNumber)}
                 title={result.description.recordGroup.title}
+                year={result.description.recordGroup.inclusiveDates.inclusiveStartDate.year}
               />
           } else {
             return (
@@ -155,6 +156,7 @@ class App extends React.Component {
                 setChildren={Number(result.description.recordGroup.seriesCount)}
                 setNumber={Number(result.description.recordGroup.recordGroupNumber)}
                 title={result.description.recordGroup.title}
+                year={result.description.recordGroup.inclusiveDates.inclusiveStartDate.year}
               />
             )
           }
