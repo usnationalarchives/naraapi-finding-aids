@@ -50,7 +50,6 @@ class Set extends React.Component {
     }
     return(
       <div>
-        <aside>{this.props.year}</aside>
         {!this.state.open &&
           
           <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} size={visualSize} />
@@ -75,18 +74,14 @@ class Set extends React.Component {
             display: block;
             display: flex;
             flex-direction: row;
-            margin: 10px;
+            margin: 5px;
             overflow: hidden;
             position: relative;
           }
-          aside {
-            position: absolute;
-            top: 0;
-            left: 0;
-          }
+
         `}</style>
         <style jsx>{`
-          width: ${this.state.open ? 800 + 'px' : visualSize};
+          width: ${this.state.open ? 800 + 'px' : 400 + 'px'};
           height: ${this.state.open ? 400 + 'px' : visualSize};
           background: ${this.state.open ? '#494440' : '#e4e2e0'};
         `}</style>

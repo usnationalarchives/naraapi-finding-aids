@@ -163,7 +163,6 @@ class App extends React.Component {
     let moreButton;
     if(this.state.results) {
       const mean = this.getSizeParam(this.state.results);
-      console.log("mean /2 = " + mean / 2 + " mean = " + mean + " mean + (mean / 2) = " + (mean + (mean / 2)))
       mappedResults = this.state.results.map((result, index) => {
         let visualSize = 'default';
         if(this.state.resultType === "recordGroup") {
@@ -269,7 +268,7 @@ class App extends React.Component {
               display: flex;
               flex-direction: column;
               flex-wrap: wrap;
-              height: 75vw;
+              max-height: 75vw;
             }
             `}</style>
       </div>
