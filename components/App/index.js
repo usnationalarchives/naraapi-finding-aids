@@ -4,7 +4,6 @@ import Router from 'next/router'
 import Header from '../Header';
 import Set from '../Set';
 import Item from '../Item';
-import FindingAids from '../FindingAids';
 import Breadcrumb from '../Breadcrumb';
 
 import FilterForm from '../FilterForm';
