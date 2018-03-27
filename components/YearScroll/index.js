@@ -25,7 +25,7 @@ const YearScroll = ({results, onchange, year}) => {
 
   return(
     <div>
-     <p> Showing records from {year ? year : min} until {max}.</p>
+     <p> Showing records with a start date of {year ? year : min} or later.</p>
       {min}
       <input type='range' min={min} max={max} step='10' value={year ? year : min} onChange={onchange}/>
       {max}
