@@ -206,7 +206,9 @@ class App extends React.Component {
             series={this.props.resultType == 'items' ? this.props.query : null}
             records={this.props.totalResults}
           />
+          {this.state.resultType == 'recordGroup' && 
           <YearScroll results={this.state.results} onchange={this.handleYearChange} year={this.state.year}/>
+        }
             {this.state.results &&
               <section>
                 {mappedResults}
