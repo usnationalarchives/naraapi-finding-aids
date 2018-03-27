@@ -30,21 +30,10 @@ class App extends React.Component {
       filterOpen: false,
       year: null
     }
-    this.handleClick = this.handleClick.bind(this);
+    this.handleMoreClick = this.handleMoreClick.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
-    this.openFilter = this.openFilter.bind(this);
-    this.handleYearChange = this.handleYearChange.bind(this);
     this.getSizeParam = this.getSizeParam.bind(this);
-  }
-
-  openFilter() {
-    this.setState({filterOpen: !this.state.filterOpen})
-  }
-
-  handleYearChange(event) {
-    event.preventDefault();
-    this.setState({year: event.target.value})
   }
 
   handleLocationChange(event) {
@@ -60,7 +49,6 @@ class App extends React.Component {
     event.preventDefault();
     let filteredKeys;
     if(this.state.locationFilter) {
-      console.log(this.state.locationFilter)
       const keys = Object.keys(this.state.locationFilter);
       filteredKeys = keys.filter((key) => {return this.state.locationFilter[key]}).join()
     } else {
@@ -79,7 +67,6 @@ class App extends React.Component {
     fetch(apiReq)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         if(data.opaResponse.results.total > 0) {
           this.setState({
             results: data.opaResponse.results.result,
@@ -99,7 +86,7 @@ class App extends React.Component {
     );
   }
 
-  handleClick(event) {
+  handleMoreClick(event) {
     let filteredKeys
     if(this.state.locationFilter) {
       const keys = Object.keys(this.state.locationFilter);
@@ -122,7 +109,7 @@ class App extends React.Component {
       .then(data => this.setState({
         results: this.state.results.concat(data.opaResponse.results.result),
         cursorMark: data.opaResponse.results.nextCursorMark,
-        filtered: true,
+        filtered: this.state.filtered,
         filterKeys: filteredKeys
       })
     );
@@ -227,7 +214,7 @@ class App extends React.Component {
       })
     }
     if(this.state.cursorMark) {
-      moreButton = <Button onClick={this.handleClick} text={'Load More'} />;
+      moreButton = <Button onClick={this.handleMoreClick} text={'Load More'} />;
     }
 
     return (
@@ -244,7 +231,7 @@ class App extends React.Component {
             records={this.props.totalResults}
           />
           {this.state.resultType == 'recordGroup' && 
-          <YearScroll results={this.state.results} onchange={this.handleYearChange} year={this.state.year}/>
+          <YearScroll results={this.state.results} onchange={(event) => this.setState({year: event.target.value})} year={this.state.year}/>
         }
             {this.state.results &&
               <section>
@@ -258,7 +245,7 @@ class App extends React.Component {
               </div>
             }
             
-          <Button onClick={this.openFilter} text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'} />
+          <Button onClick={() => this.setState({filterOpen: !this.state.filterOpen})} text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'} />
           {this.state.filterOpen &&
             <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit}/>
           }
