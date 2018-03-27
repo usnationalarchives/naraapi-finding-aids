@@ -11,6 +11,7 @@ import FilterForm from '../FilterForm';
 import SearchForm from '../SearchForm';
 import {getApiRequest} from '../getApiReq';
 import Button from '../Button';
+import YearScroll from '../YearScroll';
 
 import Head from 'next/head';
 
@@ -27,16 +28,23 @@ class App extends React.Component {
       offset: props.offset,
       filtered: props.filtered,
       filteredKeys: null,
-      filterOpen: false
+      filterOpen: false,
+      year: null
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.openFilter = this.openFilter.bind(this);
+    this.handleYearChange = this.handleYearChange.bind(this);
   }
 
   openFilter() {
     this.setState({filterOpen: !this.state.filterOpen})
+  }
+
+  handleYearChange(event) {
+    event.preventDefault();
+    this.setState({year: event.target.value})
   }
 
   handleLocationChange(event) {
@@ -129,16 +137,27 @@ class App extends React.Component {
     if(this.state.results) {
       mappedResults = this.state.results.map((result, index) => {
         if(this.state.resultType === "recordGroup") {
-          return (
+          if(this.state.year && Number(result.description.recordGroup.inclusiveDates.inclusiveStartDate.year) > this.state.year) {
             <Set
-              key={index}
-              open={false}
-              resultType={'recordGroup'}
-              setChildren={Number(result.description.recordGroup.seriesCount)}
-              setNumber={Number(result.description.recordGroup.recordGroupNumber)}
-              title={result.description.recordGroup.title}
-            />
-          )
+                key={index}
+                open={false}
+                resultType={'recordGroup'}
+                setChildren={Number(result.description.recordGroup.seriesCount)}
+                setNumber={Number(result.description.recordGroup.recordGroupNumber)}
+                title={result.description.recordGroup.title}
+              />
+          } else {
+            return (
+              <Set
+                key={index}
+                open={false}
+                resultType={'recordGroup'}
+                setChildren={Number(result.description.recordGroup.seriesCount)}
+                setNumber={Number(result.description.recordGroup.recordGroupNumber)}
+                title={result.description.recordGroup.title}
+              />
+            )
+          }
         } else if(this.state.resultType === "series") {
           return (
             <Set
@@ -186,7 +205,7 @@ class App extends React.Component {
             series={this.props.resultType == 'items' ? this.props.query : null}
             records={this.props.totalResults}
           />
-          
+          <YearScroll results={this.state.results} onchange={this.handleYearChange} year={this.state.year}/>
             {this.state.results &&
               <section>
                 {mappedResults}
