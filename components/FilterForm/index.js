@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from '../Button';
 
 import {locationIds} from '../filterTypes';
 
@@ -77,7 +78,7 @@ class FilterForm extends React.Component {
             </ul>
             
           </fieldset>
-          <button onClick={this.props.handleFilterSubmit}>Apply</button>
+          <Button onClick={this.props.handleFilterSubmit} text={'Apply'}></Button>
         </form>
         {/* <style jsx>{`
           div {
