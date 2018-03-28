@@ -8,7 +8,12 @@ const SetImage = ({image, alt, onclick, isFetching, visualSize}) => {
         <img  src={image} alt={alt} onClick={onclick}/>
       }
       <style jsx>{`
-
+        img {
+          width: 150%;
+          position: absolute;
+          left: -30%;
+          
+        }
         div {
           width: 400px;
           min-width: 400px;
@@ -16,10 +21,9 @@ const SetImage = ({image, alt, onclick, isFetching, visualSize}) => {
           animation-duration: 2s;
           animation-fill-mode: forwards;
           animation-iteration-count: infinite;
-          animation-name: shimmerBackground;
+          animation-name: ${isFetching ? 'shimmerBackground' : 'none'};
           animation-timing-function: linear;
-          background: #f6f7f8;
-          background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+          background: ${isFetching ? 'linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%)' :' #f6f7f8'};
           background-size: 800px 104px;
           position: relative;
           overflow: hidden;

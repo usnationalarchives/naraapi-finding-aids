@@ -6,7 +6,8 @@ const Header = ({text}) => {
     <div>
       <h1>
         {text}
-        <style jsx>{`
+      </h1>
+      <style jsx>{`
         	@import url('https://fonts.googleapis.com/css?family=Merriweather');
           h1 {
           	color: #205493;
@@ -16,7 +17,6 @@ const Header = ({text}) => {
           	line-height: 52px;
           }
         `}</style>
-      </h1>
     </div>
   );
 };

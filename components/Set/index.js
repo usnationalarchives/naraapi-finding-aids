@@ -49,14 +49,14 @@ class Set extends React.Component {
       visualSize = '500px';
     }
     return(
-      <div>
+      <div tabindex="0">
         {!this.state.open &&
           
           <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} size={visualSize} />
         }
         {this.state.open &&
           <Fragment>
-            <SetLeft state={this.state} props={this.props}  />
+            <SetLeft state={this.state} props={this.props} visualSize={'400px'} />
             <SetRight state={this.state} props={this.props} onclick={() => this.toggleOpen()}/>
           </Fragment>
         }
@@ -78,7 +78,10 @@ class Set extends React.Component {
             overflow: hidden;
             position: relative;
           }
-
+          div:hover,
+          div:focus {
+            box-shadow: 0 0 10px #d6d7d9;
+          }
         `}</style>
         <style jsx>{`
           width: ${this.state.open ? 800 + 'px' : 400 + 'px'};

@@ -5,10 +5,10 @@ import SetImage from './SetImage';
 import SetInfo from './SetInfo';
 import Button from '../Button';
 
-export const SetLeft = ({state, props}) => {
+export const SetLeft = ({state, props, visualSize}) => {
   return(
     <div>
-      <SetImage image={state.image} alt={props.title} />
+      <SetImage image={state.image} alt={props.title} visualSize={visualSize} />
       <SetInfo recordType={state.resultType} recordNumber={props.setNumber} childRecords={props.setChildren} isOpen={state.open}/>
       <style jsx>{`
         div {

@@ -224,40 +224,50 @@ class App extends React.Component {
           <meta charSet='utf-8' />
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
         </Head>
-        <Header text={'Finding Aids: ' + this.state.pageTitle}/>
-        <Breadcrumb 
-            recordGroup={this.props.recordGroup}
-            series={this.props.resultType == 'items' ? this.props.query : null}
-            records={this.props.totalResults}
-          />
+        <header>
+          <Header text={'Finding Aids: ' + this.state.pageTitle}/>
+          <Breadcrumb 
+              recordGroup={this.props.recordGroup}
+              series={this.props.resultType == 'items' ? this.props.query : null}
+              records={this.props.totalResults}
+            />
           {this.state.resultType == 'recordGroup' && 
-          <YearScroll results={this.state.results} onchange={(event) => this.setState({year: event.target.value})} year={this.state.year}/>
-        }
-            {this.state.results &&
-              <section>
-                {mappedResults}
-                {moreButton}
-              </section>
-            }
-            {this.state.noResults &&
-              <div>
-                <p>No results found, please try with fewer filters.</p>
-              </div>
-            }
-            
-          <Button onClick={() => this.setState({filterOpen: !this.state.filterOpen})} text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'} />
-          {this.state.filterOpen &&
-            <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit}/>
+            <YearScroll results={this.state.results} onchange={(event) => this.setState({year: event.target.value})} year={this.state.year}/>
           }
+        </header>
+        {this.state.results &&
+          <section>
+            {mappedResults}
+            {moreButton}
+          </section>
+        }
+        {this.state.noResults &&
+          <div>
+            <p>No results found, please try with fewer filters.</p>
+          </div>
+        }
+        
+      <Button onClick={() => this.setState({filterOpen: !this.state.filterOpen})} text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'} />
+      {this.state.filterOpen &&
+        <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit}/>
+      }
 
-          <style jsx>{`
-            section {
-              display: flex;
-              flex-direction: column;
-              flex-wrap: wrap;
-              max-height: 75vw;
-            }
-            `}</style>
+      <style jsx>{`
+        section {
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          max-height: 75vw;
+        }
+        header {
+          position: fixed;
+          top: 0;
+          left: 0;
+        }
+        div {
+          padding-top: 175px;
+        }
+        `}</style>
       </div>
     );
   }
