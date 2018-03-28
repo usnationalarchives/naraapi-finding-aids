@@ -80,7 +80,36 @@ class FilterForm extends React.Component {
           </fieldset>
           <Button onClick={this.props.handleFilterSubmit} text={'Apply'}></Button>
         </form>
-        {/* <style jsx>{`
+
+        {
+          <style jsx> {`
+            form {
+              background: #f1f1f1;
+              bottom: 50px;
+              margin-top: 10px;
+              max-width: 900px;
+              padding: 20px 10px;
+              position: absolute;
+              z-index: 2;
+            }
+            legend {
+              font-weight: 700;
+            }
+            ul {
+              list-style-type: none;
+              margin: 10px 0;
+              padding: 0;
+            }
+            li input {
+              margin-right: 7px;
+            }
+            fieldset {
+              border: 0; 
+              column-count: 2;
+            }
+            `}
+          </style>
+        /* <style jsx>{`
           div {
             position: fixed;
             top: 0;

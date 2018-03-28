@@ -266,6 +266,7 @@ class App extends React.Component {
         }
         div {
           padding-top: 175px;
+          position: relative;
         }
         `}</style>
       </div>
