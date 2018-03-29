@@ -80,7 +80,7 @@ export const SetRight = ({state, props, onclick}) => {
     <div>
       <Button onClick={onclick} text={'Close'}></Button>
       <h2>{props.title}</h2>
-      <p>{props.description}</p>
+      <div><p>{props.description}</p></div>
         {props.setChildren > 0 &&
           <Link href={{ pathname: '/' + path_name, query: {id: props.setNumber}}}>
           <a className={`link ${scoped.className}`}>View {linkLabel}</a>
@@ -99,6 +99,13 @@ export const SetRight = ({state, props, onclick}) => {
             display: flex;
             flex-direction: column;
             padding: 5px 20px 10px;
+          }
+          div div {
+            display: block;
+            overflow-x: scroll;
+            width: 100%;
+            height: 150px;
+            margin-bottom: 15px;
           }
         `}</style>
         <style jsx>{`

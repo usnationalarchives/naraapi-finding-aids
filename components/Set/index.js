@@ -84,7 +84,7 @@ class Set extends React.Component {
           }
         `}</style>
         <style jsx>{`
-          width: ${this.state.open ? 800 + 'px' : 400 + 'px'};
+          width: ${this.state.open ? 800 + 'px' : 300 + 'px'};
           height: ${this.state.open ? 400 + 'px' : visualSize};
           background: ${this.state.open ? '#494440' : '#e4e2e0'};
         `}</style>

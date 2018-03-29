@@ -15,8 +15,8 @@ const SetImage = ({image, alt, onclick, isFetching, visualSize}) => {
           
         }
         div {
-          width: 400px;
-          min-width: 400px;
+          width: 300px;
+          min-width: 300px;
           height: ${visualSize};
           animation-duration: 2s;
           animation-fill-mode: forwards;

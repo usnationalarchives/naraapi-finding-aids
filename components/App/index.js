@@ -160,15 +160,15 @@ class App extends React.Component {
           }
           if(this.state.year && Number(result.description.recordGroup.inclusiveDates.inclusiveStartDate.year) < this.state.year) {
             <Set
-                key={index}
-                open={false}
-                resultType={'recordGroup'}
-                setChildren={Number(result.description.recordGroup.seriesCount)}
-                setNumber={Number(result.description.recordGroup.recordGroupNumber)}
-                title={result.description.recordGroup.title}
-                year={result.description.recordGroup.inclusiveDates.inclusiveStartDate.year}
-                visualSize={visualSize}
-              />
+              key={index}
+              open={false}
+              resultType={'recordGroup'}
+              setChildren={Number(result.description.recordGroup.seriesCount)}
+              setNumber={Number(result.description.recordGroup.recordGroupNumber)}
+              title={result.description.recordGroup.title}
+              year={result.description.recordGroup.inclusiveDates.inclusiveStartDate.year}
+              visualSize={visualSize}
+            />
           } else {
             return (
               <Set
@@ -216,7 +216,7 @@ class App extends React.Component {
     if(this.state.cursorMark) {
       moreButton = <Button onClick={this.handleMoreClick} text={'Load More'} />;
     }
-
+    
     return (
       <div>
         <Head>
@@ -235,6 +235,7 @@ class App extends React.Component {
             <YearScroll results={this.state.results} onchange={(event) => this.setState({year: event.target.value})} year={this.state.year}/>
           }
         </header>
+        
         {this.state.results &&
           <section>
             {mappedResults}
@@ -247,17 +248,18 @@ class App extends React.Component {
           </div>
         }
         
+      <aside>
       <Button onClick={() => this.setState({filterOpen: !this.state.filterOpen})} text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'} />
-      {this.state.filterOpen &&
-        <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit}/>
-      }
+      <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit} open={this.state.filterOpen} />
+      </aside>
+      
 
       <style jsx>{`
         section {
           display: flex;
           flex-direction: column;
           flex-wrap: wrap;
-          max-height: 75vw;
+          height: 100%;
         }
         header {
           position: fixed;
@@ -267,7 +269,21 @@ class App extends React.Component {
         div {
           padding-top: 175px;
           position: relative;
+          height: 75vh;
         }
+        aside {
+          position: fixed;
+          left: 50%;
+          transform: translateX(-50%);
+          transition: all 2s;
+          width:100vw;
+          z-index: 15;
+        }
+        `}</style>
+        <style jsx>{`
+          aside {
+            bottom: ${this.state.filterOpen ? 0 : -65 + '%'}
+          }
         `}</style>
       </div>
     );

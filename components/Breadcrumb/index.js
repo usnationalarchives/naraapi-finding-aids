@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-const Breadcrumb = ({recordGroup, series, records}) => {
+const Breadcrumb = ({recordGroup, series, records, onClick}) => {
   let recordLabel = 'Records';
   const scoped = resolveScopedStyles(
     <scope>
