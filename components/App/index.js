@@ -225,6 +225,7 @@ class App extends React.Component {
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
         </Head>
         <header>
+        <img src={"/static/nara-logo-blue.png"} alt={"National Archives"} />
           <Header text={'Finding Aids: ' + this.state.pageTitle}/>
           <Breadcrumb 
               recordGroup={this.props.recordGroup}
@@ -272,15 +273,22 @@ class App extends React.Component {
           margin: 20px 10px;
         }
         header {
-          background: #ffffff;
+          background: #235692;
+          background-image:linear-gradient( to top right, #235692, #20bee4 );
           border-bottom: 1px solid #d6d7d9;
           box-shadow: 0 0 10px #d6d7d9;
+          color: #fff;
           left: 0;
           padding: 0 20px 20px 20px;
           position: fixed;
           top: 0;
           width: 100%;
           z-index: 2;
+        }
+        img {
+          position: absolute;
+          top: 20%;
+          right: 60px;
         }
         div {
           padding-top: 175px;

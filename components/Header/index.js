@@ -9,7 +9,7 @@ const Header = ({text}) => {
       </h1>
       <style jsx>{`
           h1 {
-            color: #205493;
+            color: #ffffff;
             font-weight: 700;
             font-size: 35px;
             line-height: 52px;
