@@ -1,25 +1,47 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Button = ({onClick, text}) => {
+const Button = ({onClick, text, type}) => {
   return(
     <button onClick={onClick}>
       {text}
       <style jsx>{`
         button {
-          background: #0071bc;
+          background: ${type === 'close' ? '#ffffff' : ' #0071bc'};
           border: 0;
+          display: inline-block;
           border-radius: 5px;
-          color: #ffffff;
+          color: ${type === 'close' ? '#212121' : '#ffffff'};
           cursor: pointer;
           font-size: 14px;
           font-weight: 700;
+          width: auto;
           padding: 10px 20px;
+          position: ${type === 'close' ? 'absolute' : 'relative'};
+          top: ${type === 'close' ? '10px' : 'auto'};
+          right: ${type === 'close' ? '10px' : 'auto'};
+          text-indent: ${type === 'close' ? '-10000px' : '0'};
+          overflow: ${type === 'close' ? 'hidden' : 'auto'};
+        }
+        button::after {
+          content: 'X';
+          font-size: 20px;
+          line-height: 30px;
+          height: 30px;
+          width: 30px;
+          text-align: center;
+          display: inline;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          text-indent: 0;
         }
         button:hover {
-          background: #205493;
+          background: ${type === 'close' ? '#fad980' : '#205493'} ;
         }
         button:active {
-          background: #112e51;
+          background: ${type === 'close' ? '#fad980' : '#112e51'}
         }
         button:focus {
           outline: 2px dotted #aeb0b5;
@@ -28,6 +50,12 @@ const Button = ({onClick, text}) => {
       `}</style>
     </button>
   );
+}
+
+Button.propTypes = {
+  text: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  type: PropTypes.oneOf(['default', 'close'])
 }
 
 export default Button;

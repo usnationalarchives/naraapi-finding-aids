@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import {SetLeft, SetRight} from './SetLayout';
 import SetImage from './SetImage';
 import SetModal from './SetModal';
+import Button from '../Button';
+
 
 class Set extends React.Component {
 
@@ -92,9 +94,6 @@ class Set extends React.Component {
       }
     }
 
-
-
-
     return(
       <div tabindex="0">
         <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} size={visualSize} />
@@ -102,8 +101,9 @@ class Set extends React.Component {
           <SetModal>
             <div className={`modal ${scoped.className}`}>
               <div className={`inner-modal ${scoped.className}`}>
+                <Button onClick={() => this.toggleOpen()} text={'Close'} type={'close'} />
                 <SetLeft state={this.state} props={this.props} visualSize={'400px'} />
-                <SetRight state={this.state} props={this.props} onclick={() => this.toggleOpen()}/>
+                <SetRight state={this.state} props={this.props} />
               </div>
             </div>
             {scoped.styles}

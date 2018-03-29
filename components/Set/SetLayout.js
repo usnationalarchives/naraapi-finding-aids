@@ -3,7 +3,6 @@ import Link from 'next/link'
 
 import SetImage from './SetImage';
 import SetInfo from './SetInfo';
-import Button from '../Button';
 
 export const SetLeft = ({state, props, visualSize}) => {
   return(
@@ -78,7 +77,6 @@ export const SetRight = ({state, props, onclick}) => {
   }
   return(
     <div>
-      <Button onClick={onclick} text={'Close'}></Button>
       <h2>{props.title}</h2>
       <div><p>{props.description}</p></div>
         {props.setChildren > 0 &&
