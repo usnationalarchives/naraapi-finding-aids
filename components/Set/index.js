@@ -110,9 +110,7 @@ class Set extends React.Component {
           </SetModal>
         }
         <style jsx>{`
-          @import url('https://fonts.googleapis.com/css?family=Merriweather');
           h2 {
-            font-family: "Merriweather", serif;
             font-weight: 700;
             font-size: 20px;
             line-height: 35px;
