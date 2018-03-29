@@ -59,6 +59,7 @@ class Set extends React.Component {
             position: fixed;
             top: 0;
             left: 0;
+            z-index: 15;
             background-color: rgba(73, 68, 64, .9);
           }
           .modal::before {

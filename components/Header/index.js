@@ -10,11 +10,11 @@ const Header = ({text}) => {
       <style jsx>{`
         	@import url('https://fonts.googleapis.com/css?family=Merriweather');
           h1 {
-          	color: #205493;
-          	font-family: "Merriweather", serif;
-          	font-weight: 700;
-          	font-size: 35px;
-          	line-height: 52px;
+            color: #205493;
+            font-family: "Merriweather", serif;
+            font-weight: 700;
+            font-size: 35px;
+            line-height: 52px;
           }
         `}</style>
     </div>
