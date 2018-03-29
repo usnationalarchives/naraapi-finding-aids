@@ -44,7 +44,7 @@ class FilterForm extends React.Component {
           form {
             background: #f1f1f1;
             margin-top: 10px;
-            padding: 20px 10px;
+            padding: 10px 30px 20px;
           }
           legend {
             font-weight: 700;
