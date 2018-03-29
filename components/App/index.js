@@ -252,19 +252,29 @@ class App extends React.Component {
       <Button onClick={() => this.setState({filterOpen: !this.state.filterOpen})} text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'} />
       <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit} open={this.state.filterOpen} />
       </aside>
-      
-
+      <style jsx global>{`
+        @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+        html {
+          font-size: 10px;
+        }
+        body {
+          font-size: 16px;
+          font-family: "Source Sans Pro", sans-serif;
+          margin: 0;
+        }
+      `}</style>
       <style jsx>{`
         section {
           display: flex;
           flex-direction: column;
           flex-wrap: wrap;
           height: 100%;
-          margin-top: 20px;
+          margin: 20px 10px;
         }
         header {
           background: #ffffff;
           border-bottom: 1px solid #d6d7d9;
+          box-shadow: 0 0 10px #d6d7d9;
           left: 0;
           padding: 0 20px 20px 20px;
           position: fixed;

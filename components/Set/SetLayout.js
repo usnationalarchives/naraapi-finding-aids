@@ -100,7 +100,7 @@ export const SetRight = ({state, props, onclick}) => {
           }
           div div {
             display: block;
-            overflow-x: scroll;
+            overflow-x: auto;
             width: 100%;
             height: 150px;
             margin-bottom: 15px;
