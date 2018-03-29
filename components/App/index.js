@@ -260,11 +260,17 @@ class App extends React.Component {
           flex-direction: column;
           flex-wrap: wrap;
           height: 100%;
+          margin-top: 20px;
         }
         header {
+          background: #ffffff;
+          border-bottom: 1px solid #d6d7d9;
+          left: 0;
+          padding: 0 20px 20px 20px;
           position: fixed;
           top: 0;
-          left: 0;
+          width: 100%;
+          z-index: 2;
         }
         div {
           padding-top: 175px;
