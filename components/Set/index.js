@@ -12,7 +12,7 @@ class Set extends React.Component {
     super(props);    
     this.state = {
       open: props.open,
-      image: '/static/placeholder.png',
+      image: '/static/nara-logo-blue.png',
       resultType: props.resultType,
       description: '',
       isFetching: true
@@ -31,7 +31,7 @@ class Set extends React.Component {
     fetch(api)
     .then(response => response.json())
     .then(data => this.setState({
-      image: data.opaResponse.results.result[0].objects ? data.opaResponse.results.result[0].objects.object.file['@url'] : '/static/placeholder.png',
+      image: data.opaResponse.results.result[0].objects ? data.opaResponse.results.result[0].objects.object.file['@url'] : '/static/nara-logo-blue.png',
       isFetching: false
     })
       

@@ -86,7 +86,7 @@ export const SetRight = ({state, props, onclick}) => {
           <a className={`link ${scoped.className}`}>View {linkLabel}</a>
           </Link>
         }
-        {props.setChildren == 0 &&
+        {(props.setChildren == 0 && props.physicalResult)&&
           <ul>
             <li><span>Size: </span>{props.physicalResult.extent}</li>
             <li><span>Holding Type: </span>{props.physicalResult.holdingsMeasurementArray.holdingsMeasurement.type.termName}</li>
