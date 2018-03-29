@@ -57,15 +57,15 @@ const Breadcrumb = ({recordGroup, series, records, onClick}) => {
       {scoped.styles}
       <style jsx>{`
         span {
-          color: #212121;
+          color: #ffffff;
           text-transform: uppercase;
           padding-left: 10px;
           position: relative;
-          border-left: 2px solid #212121;
+          border-left: 2px solid #ffffff;
           margin-right: 10px;
         }
         span:first-of-type {
-          border-left: ${recordGroup && !series ? 'none' : '2px solid #212121'};
+          border-left: ${recordGroup && !series ? 'none' : '2px solid #ffffff'};
         }
       `}</style>
     </div>

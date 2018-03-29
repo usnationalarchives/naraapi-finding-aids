@@ -41,7 +41,7 @@ const YearScroll = ({results, onchange, year}) => {
           height: 8px;
           animate: all 0.2s;
           box-shadow: 1px 1px 1px #323a45, 0px 0px 1px #212121;
-          background: #0071bc;
+          background: #112e51;
           border-radius: 1.3px;
           border: 0.2px solid #010101;
         }
