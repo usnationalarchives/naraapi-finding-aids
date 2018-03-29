@@ -33,12 +33,3 @@ export default class Index extends React.Component {
     )
   }
 } 
-
-
-// <div>
-//         
-//         <FilterForm />
-//         {this.props.data.map((result, index) => 
-
-//         )}
-//       </div>

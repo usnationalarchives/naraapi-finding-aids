@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import {SetLeft, SetRight} from './SetLayout';
 import SetImage from './SetImage';
+import SetModal from './SetModal';
 
 class Set extends React.Component {
 
@@ -40,7 +41,7 @@ class Set extends React.Component {
   toggleOpen() {
     this.setState({open: !this.state.open})
   }
-
+  
   render() {
     let visualSize = '350px';
     if(this.props.visualSize === 'small') {
@@ -48,17 +49,64 @@ class Set extends React.Component {
     } else if (this.props.visualSize === 'large') {
       visualSize = '500px';
     }
+
+    const scoped = resolveScopedStyles(
+      <scope>
+        <style jsx>{`
+          .modal {
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(73, 68, 64, .9);
+          }
+          .modal::before {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-image: ${'url(' + this.state.image + ')'};
+            background-size: cover;
+            content: "";
+            opacity: 0.3;
+            filter: blur(10px);
+          }
+          .inner-modal {
+            height: 400px;
+            background: #494440;
+            width: 800px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        `}</style>
+      </scope>
+    )
+  
+    function resolveScopedStyles(scope) {
+      return {
+        className: scope.props.className,
+        styles: scope.props.children
+      }
+    }
+
+
+
+
     return(
       <div tabindex="0">
-        {!this.state.open &&
-          
-          <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} size={visualSize} />
-        }
+        <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} size={visualSize} />
         {this.state.open &&
-          <Fragment>
-            <SetLeft state={this.state} props={this.props} visualSize={'400px'} />
-            <SetRight state={this.state} props={this.props} onclick={() => this.toggleOpen()}/>
-          </Fragment>
+          <SetModal>
+            <div className={`modal ${scoped.className}`}>
+              <div className={`inner-modal ${scoped.className}`}>
+                <SetLeft state={this.state} props={this.props} visualSize={'400px'} />
+                <SetRight state={this.state} props={this.props} onclick={() => this.toggleOpen()}/>
+              </div>
+            </div>
+            {scoped.styles}
+          </SetModal>
         }
         <style jsx>{`
           @import url('https://fonts.googleapis.com/css?family=Merriweather');
@@ -77,16 +125,14 @@ class Set extends React.Component {
             margin: 5px;
             overflow: hidden;
             position: relative;
+            width: 300px;
+            height: ${visualSize};
+            background: #e4e2e0;
           }
           div:hover,
           div:focus {
             box-shadow: 0 0 10px #d6d7d9;
           }
-        `}</style>
-        <style jsx>{`
-          width: ${this.state.open ? 800 + 'px' : 300 + 'px'};
-          height: ${this.state.open ? 400 + 'px' : visualSize};
-          background: ${this.state.open ? '#494440' : '#e4e2e0'};
         `}</style>
       </div>
     )

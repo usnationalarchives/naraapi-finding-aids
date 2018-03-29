@@ -218,7 +218,7 @@ class App extends React.Component {
     }
     
     return (
-      <div>
+      <div id="root">
         <Head>
           <title>Finding Aids</title>
           <meta charSet='utf-8' />
@@ -288,7 +288,7 @@ class App extends React.Component {
         `}</style>
         <style jsx>{`
           aside {
-            bottom: ${this.state.filterOpen ? 0 : -65 + '%'}
+            bottom: ${this.state.filterOpen ? 0 : -59 + '%'}
           }
         `}</style>
       </div>
