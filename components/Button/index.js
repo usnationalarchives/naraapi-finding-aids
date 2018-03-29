@@ -24,7 +24,7 @@ const Button = ({onClick, text, type}) => {
           overflow: ${type === 'close' ? 'hidden' : 'auto'};
         }
         button::after {
-          content: 'X';
+          content: ${type === 'close' ? '"X"' : '""'};
           font-size: 20px;
           line-height: 30px;
           height: 30px;
