@@ -1,7 +1,7 @@
 # NARA Finding Aids
 
 ## Current Dev Link
-Currentlu the app lives on a heroku environment but will probably move to custom NodeJS server in the future.  
+Currently the app lives on a heroku environment but will probably move to custom NodeJS server in the future.  
 [Heroku Link](https://naraapi-finding.herokuapp.com/)
 
 ## Contributing
