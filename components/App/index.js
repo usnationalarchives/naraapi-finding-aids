@@ -248,10 +248,12 @@ class App extends React.Component {
           </div>
         }
         
-      <aside>
-      <Button onClick={() => this.setState({filterOpen: !this.state.filterOpen})} text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'} />
-      <FilterForm handleLocationChange={this.handleLocationChange} handleFilterSubmit={this.handleFilterSubmit} open={this.state.filterOpen} />
-      </aside>
+        <FilterForm 
+          handleLocationChange={this.handleLocationChange}
+          handleFilterSubmit={this.handleFilterSubmit}
+          open={this.state.filterOpen}
+          handleOpen={() => this.setState({filterOpen: !this.state.filterOpen})}
+        />
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
         html {
@@ -289,18 +291,17 @@ class App extends React.Component {
         }
         aside {
           position: fixed;
-          left: 50%;
-          transform: translateX(-50%);
+          top: 0;
           transition: all 2s;
-          width:100vw;
+          height:100vh;
           z-index: 15;
         }
         `}</style>
-        <style jsx>{`
+        {/* <style jsx>{`
           aside {
-            bottom: ${this.state.filterOpen ? 0 : -59 + '%'}
+            left: ${this.state.filterOpen ? 0 : -59 + '%'}
           }
-        `}</style>
+        `}</style> */}
       </div>
     );
   }

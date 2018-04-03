@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 
@@ -13,6 +13,29 @@ class FilterForm extends React.Component {
   }
 
   render() {
+    const scoped = resolveScopedStyles(
+      <scope>
+        <style jsx>{`
+          .toggle {
+            position: absolute;
+            left: 100%;
+            margin: 0;
+            display: block;
+            top: 0px;
+            z-index: 20;
+            padding: 0;
+            width: auto;
+          }
+        `}</style>
+      </scope>
+    )
+  
+    function resolveScopedStyles(scope) {
+      return {
+        className: scope.props.className,
+        styles: scope.props.children
+      }
+    }
     return(
       <div>
         <form>
@@ -38,13 +61,26 @@ class FilterForm extends React.Component {
             </ul>
             
           </fieldset>
-          <Button onClick={this.props.handleFilterSubmit} text={'Apply'}></Button>
+          <Button onClick={this.props.handleFilterSubmit} text={'Apply'} />
+          
         </form>
+        <div className={`toggle ${scoped.className}`}>
+          <Button
+            onClick={this.props.handleOpen}
+            text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'}
+          />
+        </div>
+        {scoped.styles}
         <style jsx>{`
-          form {
+          div {
             background: #f1f1f1;
             margin-top: 10px;
             padding: 10px 30px 20px;
+            position: fixed;
+            width: 300px;
+            left: ${this.props.open ? '0' : '-360px'};
+            top: 0;
+            z-index: 5;
           }
           legend {
             font-weight: 700;

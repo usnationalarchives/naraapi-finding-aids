@@ -14,7 +14,7 @@ class Set extends React.Component {
     super(props);    
     this.state = {
       open: props.open,
-      image: '/static/nara-logo-blue.png',
+      image: '/static/us-national-archives.svg',
       resultType: props.resultType,
       description: '',
       isFetching: true
@@ -33,7 +33,7 @@ class Set extends React.Component {
     fetch(api)
     .then(response => response.json())
     .then(data => this.setState({
-      image: data.opaResponse.results.result[0].objects ? data.opaResponse.results.result[0].objects.object.file['@url'] : '/static/nara-logo-blue.png',
+      image: data.opaResponse.results.result[0].objects ? data.opaResponse.results.result[0].objects.object.file['@url'] : '/static/us-national-archives.svg',
       isFetching: false
     })
       
@@ -45,11 +45,11 @@ class Set extends React.Component {
   }
   
   render() {
-    let visualSize = '350px';
+    let visualSize = '150px';
     if(this.props.visualSize === 'small') {
-      visualSize = '200px';
+      visualSize = '50px';
     } else if (this.props.visualSize === 'large') {
-      visualSize = '500px';
+      visualSize = '300px';
     }
 
     const scoped = resolveScopedStyles(

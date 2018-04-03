@@ -24,9 +24,5 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
   },
-  "devDependencies": {
-    "@storybook/addon-actions": "^3.3.14",
-    "@storybook/addon-knobs": "^3.3.14",
-    "@storybook/react": "^3.3.14"
-  }
+  "devDependencies": {}
 }
