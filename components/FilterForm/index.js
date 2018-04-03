@@ -22,7 +22,7 @@ class FilterForm extends React.Component {
             margin: 0;
             display: block;
             top: 0px;
-            z-index: 20;
+            z-index: 5;
             padding: 0;
             width: auto;
           }
@@ -80,7 +80,7 @@ class FilterForm extends React.Component {
             width: 300px;
             left: ${this.props.open ? '0' : '-360px'};
             top: 0;
-            z-index: 5;
+            z-index: 11;
           }
           legend {
             font-weight: 700;
