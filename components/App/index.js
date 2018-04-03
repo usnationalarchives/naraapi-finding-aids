@@ -226,11 +226,13 @@ class App extends React.Component {
         </Head>
         <header>
           <Header text={'Finding Aids: ' + this.state.pageTitle}/>
-          <Breadcrumb 
+          {this.props.query &&
+            <Breadcrumb 
               recordGroup={this.props.recordGroup}
-              series={this.props.resultType == 'items' ? this.props.query : null}
-              records={this.props.totalResults}
+              series={this.props.resultType == 'item' ? this.props.query : ''}
+              totalResults={this.props.totalResults}
             />
+          }
           {this.state.resultType == 'recordGroup' && 
             <YearScroll results={this.state.results} onchange={(event) => this.setState({year: event.target.value})} year={this.state.year}/>
           }

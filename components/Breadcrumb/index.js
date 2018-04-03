@@ -1,9 +1,30 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-const Breadcrumb = ({recordGroup, series, records, onClick}) => {
+// Should look like this:
+// Home => doesn't show
+// ?recordGroup => Record Group # | # of series (Record Group links to home)
+// ?series => Record Group # | Series # | # of records (Record Group links to Record Group && Series links to series)
+
+
+const Breadcrumb = ({recordGroup, series, totalResults, onClick}) => {
   let recordLabel = 'Records';
+  let urlPath;
+  let seriesLabel;
+  let seriesPath;
+  let recordCount;
+  if(recordGroup && series === '') {
+    urlPath = { pathname: '/'};
+    seriesLabel = totalResults + ' Series';
+  } else {
+    urlPath = { pathname: '/record-group', query: {id: recordGroup}};
+    seriesPath = { pathname: '/series', query: {id: series}};
+    seriesLabel = 'Series #' + series;
+    recordCount = totalResults + (totalResults > 1 ? ' Records' : ' Record');
+  }
+
+
   const scoped = resolveScopedStyles(
     <scope>
       <style jsx>{`
@@ -13,6 +34,8 @@ const Breadcrumb = ({recordGroup, series, records, onClick}) => {
           padding-right: 10px;
           position: relative;
           text-decoration: none;
+          padding-left: 10px;
+          border-left: 2px solid #212121;
         }
         
         .link:focus {
@@ -23,6 +46,10 @@ const Breadcrumb = ({recordGroup, series, records, onClick}) => {
         .link:active {
           color: #fad980;
           text-decoration: underline;
+        }
+        .link:first-of-type {
+          border-left: none;
+          padding-left: 0;
         }
       `}</style>
     </scope>
@@ -39,21 +66,23 @@ const Breadcrumb = ({recordGroup, series, records, onClick}) => {
   }
   return(
     <div>
-      {(recordGroup && !series) &&
-        <span>Record Group {recordGroup} </span> 
-      }
-      {(recordGroup && series) &&
         <Link 
-          href={{ pathname: '/record-group', query: {id: recordGroup}}}>
+          href={urlPath}>
           <a className={`link ${scoped.className}`}>Record Group {recordGroup}</a>
         </Link>
-      }
-      {series &&
-        <span>Series {series}</span> 
-      }
-      {recordGroup &&
-        <span>{records + ' ' + recordLabel}</span> 
-      }
+        {series ? 
+          <Fragment>
+            <Link 
+              href={seriesPath}>
+              <a className={`link ${scoped.className}`}>{seriesLabel}</a>
+            </Link>
+            <span>{recordCount}</span>
+          </Fragment>
+               :
+          <span>{seriesLabel}</span>
+        }
+        
+        
       {scoped.styles}
       <style jsx>{`
         span {
@@ -64,12 +93,24 @@ const Breadcrumb = ({recordGroup, series, records, onClick}) => {
           border-left: 2px solid #212121;
           margin-right: 10px;
         }
-        span:first-of-type {
-          border-left: ${recordGroup && !series ? 'none' : '2px solid #212121'};
-        }
+        
       `}</style>
     </div>
   );
 };
 
 export default Breadcrumb;
+
+
+// {(recordGroup && !series) &&
+//   <span>Record Group {recordGroup} </span> 
+// }
+// {(recordGroup && series) &&
+
+// }
+// {series &&
+//   <span>Series {series}</span> 
+// }
+// {recordGroup &&
+//   <span>{records + ' ' + recordLabel}</span> 
+// }
