@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import ItemImage from './ItemImage';
 import OnlineBanner from './OnlineBanner';
 import ItemHeader from './ItemHeader';
+import ItemDescription from './ItemDescription';
 
 
 class Item extends React.Component {
@@ -29,7 +30,7 @@ class Item extends React.Component {
 
   render() {
     return (
-      <div onMouseEnter={this.toggleOverlayOn} onMouseLeave={this.toggleOverlayOff}>
+      <a onMouseEnter={this.toggleOverlayOn} onMouseLeave={this.toggleOverlayOff}  href={'https://catalog.archives.gov/id/' + this.props.naid} target='_blank'>
         {this.props.object &&
           <OnlineBanner />
         }
@@ -38,33 +39,28 @@ class Item extends React.Component {
         }
         <ItemHeader 
           title={this.props.title}
-          description={this.props.description}
           tag={this.props.tag}
           date={this.props.date}
         />
-        {/* This needs to be accessible in some way,
-            maybe set state in css showing component if focused or mouseEnter,
-            instead of mounting and unmounting component
-        */}
         {this.state.open &&
-          <a href={'https://catalog.archives.gov/id/' + this.props.naid} target='_blank'>View in Catalog</a>
+          <ItemDescription description={this.props.description} />
         }
         
         <style jsx>{`
           img {
             width: 300px;
           }
-          div {
-            background: #f1f1f1;
+          a {
+            color: #212121;
+            box-shadow: 1px 2px 12px -4px rgba(0,0,0,0.75);
+            display: block;
             margin: 10px;
             width: 300px;
             position: relative;
-          }
-          div:nth-child(odd) {
-            background: #dce4ef;
+            text-decoration: none;
           }
         `}</style>
-      </div>
+      </a>
     );
   }
 }

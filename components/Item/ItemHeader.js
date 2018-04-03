@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ItemHeader = ({title, description, tag, date}) => {
+const ItemHeader = ({title, tag, date}) => {
   let dateFormatted;
   if(date) {
     let newDate = new Date(date);
@@ -18,10 +18,10 @@ const ItemHeader = ({title, description, tag, date}) => {
           {dateFormatted}
         </li>
       </ul>
-      <p>{description}</p>
       <style jsx>{`
         div {
           padding: 20px;
+          color: #212121;
         }
         ul {
           list-style: none;
