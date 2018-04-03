@@ -282,7 +282,7 @@ class App extends React.Component {
           position: fixed;
           top: 0;
           width: 100%;
-          z-index: 2;
+          z-index: 10;
         }
         div {
           padding-top: 175px;
