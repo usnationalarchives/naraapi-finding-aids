@@ -8,7 +8,7 @@ const SetInfo = ({recordType, recordNumber, childRecords, isOpen}) => {
         (<span> Record Group {recordNumber} </span>) :
         (<span> Series {recordNumber} </span>)
       }
-      |
+      /
       {recordType == 'recordGroup' ? 
         (<span> {childRecords} Series</span>) :
         (<span> {childRecords} Items</span>)
@@ -17,13 +17,10 @@ const SetInfo = ({recordType, recordNumber, childRecords, isOpen}) => {
         aside {
           text-transform: uppercase;
           letter-spacing: 1px;
+          color: #0071bc;
           width: 300px;
-          padding: 10px 0;
-        }
-      `}</style>
-      <style jsx>{`
-        aside {
-          color: ${isOpen ? '#ffffff' : '#212121'}
+          font-size: 14px;
+          padding: 0;
         }
       `}</style>
     </aside>

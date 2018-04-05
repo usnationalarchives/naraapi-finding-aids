@@ -214,7 +214,11 @@ class App extends React.Component {
       })
     }
     if(this.state.cursorMark) {
-      moreButton = <Button onClick={this.handleMoreClick} text={'Load More'} />;
+      moreButton = <Button
+        onClick={this.handleMoreClick}
+        text={'Load More'}
+        dark={true}
+      />;
     }
     
     return (

@@ -8,7 +8,7 @@ export const SetLeft = ({state, props, visualSize}) => {
   return(
     <div>
       <SetImage image={state.image} alt={props.title} visualSize={visualSize} />
-      <SetInfo recordType={state.resultType} recordNumber={props.setNumber} childRecords={props.setChildren} isOpen={state.open}/>
+      
       <style jsx>{`
         div {
           display: flex;
@@ -36,18 +36,31 @@ export const SetRight = ({state, props, onclick}) => {
         .link:link,
         .link:visited {
           color: #ffffff;
+          background-color: #112e51;
+          padding: 10px 40px;
+          margin: 20px 0;
+          border-radius: 2.5rem;
           font-weight: bold;
+          text-transform: uppercase;
+          letter-spacing: 1px;
           text-decoration: none;
           position: relative;
           display: block;
           align-self:flex-start;
-          padding-right: 15px;
+          box-shadow: 1px 2px 12px -4px rgba(0,0,0,0.75);
         }
         .link:after {
-          content: ">";
+          content: "";
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          border: 2px solid #ffffff;
+          border-left: 0;
+          border-top: 0;
+          transform: rotate(-45deg);
           position: absolute;
-          right: 0;
-          top: 0;
+          right: 25px;
+          top: 15px;
           transition: right .5s;
         }
         
@@ -57,13 +70,14 @@ export const SetRight = ({state, props, onclick}) => {
         }
         .link:hover,
         .link:active {
-          color: #fad980;
+          color: #112e51;
+          background-color: #ffffff;
         }
 
         .link:hover:after,
         .link:active:after {
-          right: -5px;
-          color: #fad980;
+          right: 20px;
+          border-color: #112e51;
         }
       `}</style>
     </scope>
@@ -77,38 +91,44 @@ export const SetRight = ({state, props, onclick}) => {
   }
   return(
     <div>
+      <SetInfo recordType={state.resultType} recordNumber={props.setNumber} childRecords={props.setChildren} isOpen={state.open}/>
       <h2>{props.title}</h2>
-      <div><p>{props.description}</p></div>
-        {props.setChildren > 0 &&
-          <Link href={{ pathname: '/' + path_name, query: {id: props.setNumber}}}>
+      {props.description &&
+        <p>{props.description}</p>
+      }
+      {props.setChildren > 0 &&
+        <Link href={{ pathname: '/' + path_name, query: {id: props.setNumber}}}>
           <a className={`link ${scoped.className}`}>View {linkLabel}</a>
-          </Link>
-        }
-        {(props.setChildren == 0 && props.physicalResult)&&
-          <ul>
-            <li><span>Size: </span>{props.physicalResult.extent}</li>
-            <li><span>Holding Type: </span>{props.physicalResult.holdingsMeasurementArray.holdingsMeasurement.type.termName}</li>
-            <li><span>Count: </span>{props.physicalResult.holdingsMeasurementArray.holdingsMeasurement.count}</li>
-          </ul>
-        }
-        {scoped.styles}
-        <style jsx>{`
-          div {
-            display: flex;
-            flex-direction: column;
-            padding: 5px 20px 10px;
-          }
-          div div {
-            display: block;
-            overflow-x: auto;
-            width: 100%;
-            height: 150px;
-            margin-bottom: 15px;
-          }
-        `}</style>
-        <style jsx>{`
+        </Link>
+      }
+      {(props.setChildren == 0 && props.physicalResult)&& //add checks for all these as they aren't always available
+        <ul>
+          <li><span>Size: </span>{props.physicalResult.extent}</li>
+          <li><span>Holding Type: </span>{props.physicalResult.holdingsMeasurementArray.holdingsMeasurement.type.termName}</li>
+          <li><span>Count: </span>{props.physicalResult.holdingsMeasurementArray.holdingsMeasurement.count}</li>
+        </ul>
+      }
+      {scoped.styles}
+      <style jsx>{`
         div {
-          color: ${state.open ? '#ffffff' : '#212121'}
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          padding: 50px 40px 10px;
+          color: #112e51;
+        }
+        h2 {
+          font-weight: 700;
+          margin: 0;
+          margin-bottom: ${props.setChildren > 0 ? '115px' : '0'}
+        }
+        p {
+          display: block;
+          overflow-x: auto;
+          width: 100%;
+          height: 100px;
+          padding: 0;
+          margin-bottom: 15px;
         }
       `}</style>
     </div>

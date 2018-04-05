@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({onClick, text, type}) => {
+const Button = ({onClick, text, type, dark}) => {
   return(
     <button onClick={onClick}>
       {text}
       <style jsx>{`
         button {
-          background: ${type === 'close' ? '#ffffff' : ' #0071bc'};
+          background: ${!dark ? '#ffffff' : ' #112e51'};
           border: 0;
           display: inline-block;
-          border-radius: 5px;
-          color: ${type === 'close' ? '#212121' : '#ffffff'};
+          border-radius: ${type === 'filter' ? '0' : '5px'};
+          color: ${!dark ? '#112e51' : '#ffffff'};
           cursor: pointer;
           font-size: 14px;
           font-weight: 700;
@@ -38,10 +38,12 @@ const Button = ({onClick, text, type}) => {
           text-indent: 0;
         }
         button:hover {
-          background: ${type === 'close' ? '#fad980' : '#205493'} ;
+          background: ${!dark ? '#112e51' : '#ffffff'} ;
+          color: ${!dark ? '#ffffff' : '#205493'} ;
         }
         button:active {
-          background: ${type === 'close' ? '#fad980' : '#112e51'}
+          background: ${!dark ? '#112e51' : '#ffffff'};
+          color: ${!dark ? '#ffffff' : '#205493'} ;
         }
         button:focus {
           outline: 2px dotted #aeb0b5;

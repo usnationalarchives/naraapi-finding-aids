@@ -68,12 +68,14 @@ class FilterForm extends React.Component {
           <Button
             onClick={this.props.handleOpen}
             text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'}
+            dark={true}
+            type={'filter'}
           />
         </div>
         {scoped.styles}
         <style jsx>{`
           div {
-            background: #f1f1f1;
+            background: #112e51;
             margin-top: 10px;
             padding: 10px 30px 20px;
             position: fixed;
@@ -81,9 +83,11 @@ class FilterForm extends React.Component {
             left: ${this.props.open ? '0' : '-360px'};
             top: 0;
             z-index: 11;
+            color: #ffffff;
           }
           legend {
             font-weight: 700;
+            text-transform: uppercase;
           }
           ul {
             list-style-type: none;
@@ -100,7 +104,7 @@ class FilterForm extends React.Component {
             column-count: 2;
             padding: 10px;
             margin: 10px 0;
-            border: 1px #212121 solid;
+            border: 0;
           }
           `}
         </style>

@@ -63,21 +63,19 @@ class Set extends React.Component {
             left: 0;
             margin: 0;
             z-index: 15;
-            background-color: rgba(73, 68, 64, .9);
+            background-color: rgba(50, 58, 69, .9);
           }
           .modal::before {
             display: block;
             width: 100%;
             height: 100%;
-            background-image: ${'url(' + this.state.image + ')'};
-            background-size: cover;
             content: "";
             opacity: 0.3;
-            filter: blur(10px);
+            background-color: rgba(50, 58, 69, 1);
+            backdrop-filter: blur(5px);
           }
           .inner-modal {
-            height: 400px;
-            background: #494440;
+            height: 350px;
             width: 800px;
             position: absolute;
             top: 50%;
@@ -102,7 +100,12 @@ class Set extends React.Component {
           <SetModal>
             <div className={`modal ${scoped.className}`}>
               <div className={`inner-modal ${scoped.className}`}>
-                <Button onClick={() => this.toggleOpen()} text={'Close'} type={'close'} />
+                <Button
+                  onClick={() => this.toggleOpen()}
+                  text={'Close'}
+                  type={'close'}
+                  dark={false}
+                />
                 <SetLeft state={this.state} props={this.props} visualSize={'400px'} />
                 <SetRight state={this.state} props={this.props} />
               </div>
@@ -118,20 +121,16 @@ class Set extends React.Component {
             margin: 0 0 20px;
           }
           div {
-            padding: 20px;
+            box-shadow: 1px 2px 12px -4px rgba(0,0,0,0.75);
             display: block;
             display: flex;
+            background-color: #ffffff;
             flex-direction: row;
             margin: 5px;
             overflow: hidden;
             position: relative;
             width: 300px;
             height: ${visualSize};
-            background: #e4e2e0;
-          }
-          div:hover,
-          div:focus {
-            box-shadow: 0 0 10px #d6d7d9;
           }
         `}</style>
       </div>
