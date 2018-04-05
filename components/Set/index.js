@@ -94,7 +94,7 @@ class Set extends React.Component {
     }
 
     return(
-      <div tabindex="0">
+      <div tabIndex="0">
         <SetImage image={this.state.image} alt={this.props.title} onclick={() => this.toggleOpen()} isFetching={this.state.isFetching} size={visualSize} />
         {this.state.open &&
           <SetModal>

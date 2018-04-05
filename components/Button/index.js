@@ -15,6 +15,7 @@ const Button = ({onClick, text, type, dark}) => {
           cursor: pointer;
           font-size: 14px;
           font-weight: 700;
+          height: ${type === 'more' ? '100%' : 'auto'};
           width: auto;
           padding: 10px 20px;
           position: ${type === 'close' ? 'absolute' : 'relative'};
@@ -57,7 +58,7 @@ const Button = ({onClick, text, type, dark}) => {
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(['default', 'close'])
+  type: PropTypes.oneOf(['default', 'close', 'more', 'filter'])
 }
 
 export default Button;

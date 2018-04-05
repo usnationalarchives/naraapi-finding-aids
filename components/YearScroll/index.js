@@ -26,10 +26,18 @@ const YearScroll = ({results, onchange, year}) => {
   return(
     <div>
       <p> Showing records with a start date of {year ? year : min} or later.</p>
-      {min}
+      <span>{min}</span>
       <input type='range' min={min} max={max} step='10' value={year ? year : min} onChange={onchange}/>
-      {max}
+      <span>{max}</span>
       <style jsx>{`
+        span {
+          color: #112e51;
+          font-weight: bold;
+        }
+        p {
+          margin-top: 0;
+          color: #212121;
+        }
         input {
           -webkit-appearance: none;
           width: 50vw;
@@ -40,20 +48,19 @@ const YearScroll = ({results, onchange, year}) => {
           cursor: pointer;
           height: 8px;
           animate: all 0.2s;
-          box-shadow: 1px 1px 1px #323a45, 0px 0px 1px #212121;
-          background: #0071bc;
-          border-radius: 1.3px;
+          background: #d6d7d9;
+          border-radius: 2.5rem;
           border: 0.2px solid #010101;
         }
         input:focus::-webkit-slider-runnable-track {
-          background: #367ebd;
+          background: #aeb0b5;
         }
         input::-webkit-slider-thumb {
           box-shadow: 1px 1px 1px #323a45, 0px 0px 1px #212121;
           height: 36px;
-          width: 16px;
-          border-radius: 3px;
-          background: #ffffff;
+          width: 36px;
+          border-radius: 50%;
+          background: #112e51;
           cursor: pointer;
           -webkit-appearance: none;
           margin-top: -14px;

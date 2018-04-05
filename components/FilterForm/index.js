@@ -13,29 +13,6 @@ class FilterForm extends React.Component {
   }
 
   render() {
-    const scoped = resolveScopedStyles(
-      <scope>
-        <style jsx>{`
-          .toggle {
-            position: absolute;
-            left: 100%;
-            margin: 0;
-            display: block;
-            top: 0px;
-            z-index: 5;
-            padding: 0;
-            width: auto;
-          }
-        `}</style>
-      </scope>
-    )
-  
-    function resolveScopedStyles(scope) {
-      return {
-        className: scope.props.className,
-        styles: scope.props.children
-      }
-    }
     return(
       <div>
         <form>
@@ -64,26 +41,27 @@ class FilterForm extends React.Component {
           <Button onClick={this.props.handleFilterSubmit} text={'Apply'} />
           
         </form>
-        <div className={`toggle ${scoped.className}`}>
+        <div id="toggle">
           <Button
             onClick={this.props.handleOpen}
-            text={this.state.filterOpen ? 'Hide Filter' : 'Show Filter'}
+            text={this.state.filterOpen ? 'Hide Filter' : 'Filter'}
             dark={true}
             type={'filter'}
           />
         </div>
-        {scoped.styles}
+        
         <style jsx>{`
           div {
             background: #112e51;
-            margin-top: 10px;
             padding: 10px 30px 20px;
-            position: fixed;
-            width: 300px;
             left: ${this.props.open ? '0' : '-360px'};
-            top: 0;
-            z-index: 11;
+            top: 93px;
+            z-index: 10;
             color: #ffffff;
+            width: 300px;
+            min-width: 300px;
+            position: fixed;
+            transition: left 2s;
           }
           legend {
             font-weight: 700;
@@ -105,6 +83,19 @@ class FilterForm extends React.Component {
             padding: 10px;
             margin: 10px 0;
             border: 0;
+          }
+          #toggle {
+            position: absolute;
+            left: 100%;
+            margin: 0;
+            display: block;
+            top: 0;
+            z-index: 5;
+            padding: 0;
+            width: 80px;
+            height: 80px;
+            max-width: 80px;
+            min-width: 80px;
           }
           `}
         </style>

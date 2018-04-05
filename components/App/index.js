@@ -4,13 +4,13 @@ import Router from 'next/router'
 import Header from '../Header';
 import Set from '../Set';
 import Item from '../Item';
-import Breadcrumb from '../Breadcrumb';
 
 import FilterForm from '../FilterForm';
 import SearchForm from '../SearchForm';
 import {getApiRequest} from '../getApiReq';
 import Button from '../Button';
 import YearScroll from '../YearScroll';
+import Breadcrumb from '../Breadcrumb';
 
 import Head from 'next/head';
 
@@ -218,6 +218,7 @@ class App extends React.Component {
         onClick={this.handleMoreClick}
         text={'Load More'}
         dark={true}
+        type={'more'}
       />;
     }
     
@@ -228,47 +229,53 @@ class App extends React.Component {
           <meta charSet='utf-8' />
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
         </Head>
-        <header>
-          <Header text={'Finding Aids: ' + this.state.pageTitle}/>
-          {this.props.query &&
-            <Breadcrumb 
-              recordGroup={this.props.recordGroup}
-              series={this.props.resultType == 'item' ? this.props.query : ''}
-              totalResults={this.props.totalResults}
-            />
-          }
-          {this.state.resultType == 'recordGroup' && 
-            <YearScroll results={this.state.results} onchange={(event) => this.setState({year: event.target.value})} year={this.state.year}/>
-          }
-        </header>
-        
-        {this.state.results &&
-          <section>
-            {mappedResults}
-            {moreButton}
-          </section>
-        }
-        {this.state.noResults &&
-          <div>
-            <p>No results found, please try with fewer filters.</p>
+        <Header />
+        <div id="subheader">
+            <h2>{this.state.pageTitle}</h2>
+            {this.props.query &&
+              <Breadcrumb 
+                recordGroup={this.props.recordGroup}
+                series={this.props.resultType == 'item' ? this.props.query : ''}
+                totalResults={this.props.totalResults}
+              />
+            }
+            {this.props.resultType == 'recordGroup' && 
+              <YearScroll results={this.state.results} onchange={(event) => this.setState({year: event.target.value})} year={this.state.year}/>
+            }
           </div>
-        }
-        
+        <div id="main">
+
+          {this.state.results &&
+              <section>
+                {mappedResults}
+                <div id="more-button">
+                  {moreButton}
+                </div>
+              </section>
+          }
+          {this.state.noResults &&
+            <div>
+              <p>No results found, please try with fewer filters.</p>
+            </div>
+          }
+        </div>
         <FilterForm 
-          handleLocationChange={this.handleLocationChange}
-          handleFilterSubmit={this.handleFilterSubmit}
-          open={this.state.filterOpen}
-          handleOpen={() => this.setState({filterOpen: !this.state.filterOpen})}
-        />
+              handleLocationChange={this.handleLocationChange}
+              handleFilterSubmit={this.handleFilterSubmit}
+              open={this.state.filterOpen}
+              handleOpen={() => this.setState({filterOpen: !this.state.filterOpen})}
+            />
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
         html {
           font-size: 10px;
+          height: 100%;
         }
         body {
           font-size: 16px;
           font-family: "Source Sans Pro", sans-serif;
           margin: 0;
+          background: #f1f1f1;
         }
       `}</style>
       <style jsx>{`
@@ -277,21 +284,35 @@ class App extends React.Component {
           flex-direction: column;
           flex-wrap: wrap;
           height: 100%;
+          min-width: 100%;
           margin: 20px 10px;
+          padding-top: 130px;
+          padding-left: 100px;
+          order: 2;
         }
-        header {
-          background: #ffffff;
-          border-bottom: 1px solid #d6d7d9;
-          box-shadow: 0 0 10px #d6d7d9;
-          left: 0;
-          padding: 0 20px 20px 20px;
+        #main {
+          height: 100%;
+          padding-top: 0;
+          transition: all 2s;
+        }
+        #subheader {
+          transition: all 2s;
           position: fixed;
-          top: 0;
-          width: 100%;
-          z-index: 10;
+          padding-top: 0;
+          height: auto;
+          width: 100vw;
+          padding-bottom: 25px;
+          padding-left: 100px;
+          top: 93px;
+          left: 0;
+          z-index: 5;
+          background-color: #f1f1f1;
+        }
+        #more-button {
+          padding-top: 0;
         }
         div {
-          padding-top: 175px;
+          padding-top: 100px;
           position: relative;
           height: 75vh;
         }
@@ -303,11 +324,12 @@ class App extends React.Component {
           z-index: 15;
         }
         `}</style>
-        {/* <style jsx>{`
-          aside {
-            left: ${this.state.filterOpen ? 0 : -59 + '%'}
+        <style jsx>{`
+          #main, #subheader {
+            transform: ${this.state.filterOpen ? 'translateX(360px)' : 'translateX(0)'};
           }
-        `}</style> */}
+          
+        `}</style>
       </div>
     );
   }
