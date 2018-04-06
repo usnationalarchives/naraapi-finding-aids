@@ -48,7 +48,7 @@ class FilterForm extends React.Component {
         <div id="toggle">
           <Button
             onClick={this.props.handleOpen}
-            text={this.state.filterOpen ? 'Hide Filter' : 'Filter'}
+            text={this.props.open ? 'Close' : 'Filter'}
             dark={true}
             type={'filter'}
           />

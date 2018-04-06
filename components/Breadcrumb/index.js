@@ -35,7 +35,7 @@ const Breadcrumb = ({recordGroup, series, totalResults, onClick}) => {
           position: relative;
           text-decoration: none;
           padding-left: 10px;
-          border-left: 2px solid #212121;
+          border-right: 2px solid #212121;
         }
         
         .link:focus {
@@ -47,10 +47,7 @@ const Breadcrumb = ({recordGroup, series, totalResults, onClick}) => {
           color: #fad980;
           text-decoration: underline;
         }
-        .link:first-of-type {
-          border-left: none;
-          padding-left: 0;
-        }
+        
       `}</style>
     </scope>
   )
@@ -66,19 +63,23 @@ const Breadcrumb = ({recordGroup, series, totalResults, onClick}) => {
   }
   return(
     <div>
-        <Link 
-          href={urlPath}>
-          <a className={`link ${scoped.className}`}>Record Group {recordGroup}</a>
+      <Link 
+          href={'/'}>
+          <a className={`link ${scoped.className}`}>All</a>
         </Link>
+        {!series &&
+          <span>Record Group {recordGroup} &ndash; {recordCount}</span>
+        }
+        
         {series ? 
           <Fragment>
-            <Link 
-              href={seriesPath}>
-              <a className={`link ${scoped.className}`}>{seriesLabel}</a>
+            <Link
+              href={urlPath}>
+              <a className={`link ${scoped.className}`}>Record Group {recordGroup}</a>
             </Link>
-            <span>{recordCount}</span>
+            <span>{seriesLabel} &ndash; {recordCount}</span>
           </Fragment>
-               :
+          :
           <span>{seriesLabel}</span>
         }
         
@@ -90,7 +91,6 @@ const Breadcrumb = ({recordGroup, series, totalResults, onClick}) => {
           text-transform: uppercase;
           padding-left: 10px;
           position: relative;
-          border-left: 2px solid #212121;
           margin-right: 10px;
         }
         
@@ -100,17 +100,3 @@ const Breadcrumb = ({recordGroup, series, totalResults, onClick}) => {
 };
 
 export default Breadcrumb;
-
-
-// {(recordGroup && !series) &&
-//   <span>Record Group {recordGroup} </span> 
-// }
-// {(recordGroup && series) &&
-
-// }
-// {series &&
-//   <span>Series {series}</span> 
-// }
-// {recordGroup &&
-//   <span>{records + ' ' + recordLabel}</span> 
-// }
