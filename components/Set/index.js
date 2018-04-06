@@ -14,7 +14,7 @@ class Set extends React.Component {
     super(props);    
     this.state = {
       open: props.open,
-      image: '/static/us-national-archives.svg',
+      image: '/static/nara-horizontal-logo.svg',
       resultType: props.resultType,
       description: '',
       isFetching: true
@@ -33,7 +33,7 @@ class Set extends React.Component {
     fetch(api)
     .then(response => response.json())
     .then(data => this.setState({
-      image: data.opaResponse.results.result[0].objects ? data.opaResponse.results.result[0].objects.object.file['@url'] : '/static/us-national-archives.svg',
+      image: data.opaResponse.results.result[0].objects ? data.opaResponse.results.result[0].objects.object.file['@url'] : '/static/nara-horizontal-logo.svg',
       isFetching: false
     })
       
@@ -45,9 +45,9 @@ class Set extends React.Component {
   }
   
   render() {
-    let visualSize = '150px';
+    let visualSize = '225px';
     if(this.props.visualSize === 'small') {
-      visualSize = '50px';
+      visualSize = '150px';
     } else if (this.props.visualSize === 'large') {
       visualSize = '300px';
     }
@@ -85,7 +85,7 @@ class Set extends React.Component {
         `}</style>
       </scope>
     )
-  
+
     function resolveScopedStyles(scope) {
       return {
         className: scope.props.className,
@@ -106,7 +106,7 @@ class Set extends React.Component {
                   type={'close'}
                   dark={false}
                 />
-                <SetLeft state={this.state} props={this.props} visualSize={'400px'} />
+                <SetLeft state={this.state} props={this.props} />
                 <SetRight state={this.state} props={this.props} />
               </div>
             </div>
@@ -126,11 +126,15 @@ class Set extends React.Component {
             display: flex;
             background-color: #ffffff;
             flex-direction: row;
-            margin: 5px;
+            margin: 10px;
             overflow: hidden;
             position: relative;
             width: 300px;
             height: ${visualSize};
+            cursor: pointer;
+          }
+          div:hover {
+            box-shadow: none;
           }
         `}</style>
       </div>

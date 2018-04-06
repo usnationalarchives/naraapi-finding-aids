@@ -2,7 +2,7 @@ import React from 'react';
 
 const OnlineBanner = () => (
   <span>
-    Online
+    Available Online
     <style jsx>{`
       width: 50px;
       height: 50px;
@@ -10,9 +10,11 @@ const OnlineBanner = () => (
       text-align: center;
       position: absolute;
       z-index: 3;
-      left: 75%;
+      left: 80%;
       top: 0;
-      background-color: #fff1d2;
+      text-indent: -1000px;
+      overflow: hidden;
+      background: #0071bc url(/static/online-icon.svg) center center no-repeat;
     `}</style>
   </span>
 )

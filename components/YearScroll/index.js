@@ -52,9 +52,6 @@ const YearScroll = ({results, onchange, year}) => {
           border-radius: 2.5rem;
           border: 0.2px solid #010101;
         }
-        input:focus::-webkit-slider-runnable-track {
-          background: #aeb0b5;
-        }
         input::-webkit-slider-thumb {
           box-shadow: 1px 1px 1px #323a45, 0px 0px 1px #212121;
           height: 36px;

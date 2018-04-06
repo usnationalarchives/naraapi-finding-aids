@@ -2,6 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Button = ({onClick, text, type, dark}) => {
+  let btnHeight = 'auto';
+  let btnWidth = 'auto';
+  let btnFilter = '2.5rem';
+  let btnMargin = '0';
+
+  switch (type) {
+    case 'more':
+      btnHeight = '100%'
+      break;
+    case 'filter':
+      btnHeight = '80px';
+      btnWidth = '80px';
+      btnFilter = '0';
+      break;
+    case 'apply':
+      btnMargin = '0 auto';
+      btnWidth = '50%';
+      break;
+    case 'text':
+      btnMargin = '0 auto';
+      btnWidth = '50%';
+      break;
+  }
+
   return(
     <button onClick={onClick}>
       {text}
@@ -9,15 +33,16 @@ const Button = ({onClick, text, type, dark}) => {
         button {
           background: ${!dark ? '#ffffff' : ' #112e51'};
           border: 0;
-          display: inline-block;
-          border-radius: ${type === 'filter' ? '0' : '5px'};
+          display: block;
+          border-radius: ${btnFilter};
           color: ${!dark ? '#112e51' : '#ffffff'};
           cursor: pointer;
           font-size: 14px;
           font-weight: 700;
-          height: ${type === 'more' ? '100%' : 'auto'};
-          width: auto;
-          padding: 10px 20px;
+          height: ${btnHeight};
+          width: ${btnWidth};
+          margin: ${btnMargin};
+          padding: ${type === 'apply' ? '10px 40px' : '10px 20px'};
           position: ${type === 'close' ? 'absolute' : 'relative'};
           top: ${type === 'close' ? '10px' : 'auto'};
           right: ${type === 'close' ? '10px' : 'auto'};

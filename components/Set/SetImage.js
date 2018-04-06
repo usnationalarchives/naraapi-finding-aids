@@ -5,13 +5,15 @@ const SetImage = ({image, alt, onclick, isFetching, visualSize}) => {
     //onClick={this.toggleOpen}
     <div>
       {!isFetching &&
-        <img  src={image} alt={alt} onClick={onclick}/>
+        <img src={image} alt={alt} onClick={onclick}/>
       }
       <style jsx>{`
         img {
-          width: 150%;
+          width: ${image == '/static/nara-horizontal-logo.svg' ? '90%' : '150%'};
           position: absolute;
-          left: -30%;
+          transform: ${image == '/static/nara-horizontal-logo.svg' ? 'translateY(-50%)' : 'translateY(0)'};
+          top: ${image == '/static/nara-horizontal-logo.svg' ? '50%' : '0'};
+          left: ${image == '/static/nara-horizontal-logo.svg' ? '5%' : '-30%'};
           
         }
         div {
@@ -27,6 +29,7 @@ const SetImage = ({image, alt, onclick, isFetching, visualSize}) => {
           background-size: 800px 104px;
           position: relative;
           overflow: hidden;
+          cursor: pointer;
         }
         @keyframes shimmerBackground {
           0%{

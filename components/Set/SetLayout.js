@@ -4,15 +4,21 @@ import Link from 'next/link'
 import SetImage from './SetImage';
 import SetInfo from './SetInfo';
 
-export const SetLeft = ({state, props, visualSize}) => {
+export const SetLeft = ({state, props}) => {
+  let bgImage = state.image;
+  if(state.image === '/static/nara-horizontal-logo.svg') {
+    bgImage = '/static/us-national-archives.svg';
+  }
   return(
     <div>
-      <SetImage image={state.image} alt={props.title} visualSize={visualSize} />
-      
       <style jsx>{`
         div {
-          display: flex;
-          flex-direction: column;
+          display: block;
+          max-width: 400px;
+          width: 400px;
+          height: 100%;
+          background: ${'url(' +bgImage + ') no-repeat top center'};
+          background-size: cover;
         }
       `}</style>
     </div>
@@ -116,11 +122,12 @@ export const SetRight = ({state, props, onclick}) => {
           justify-content: flex-start;
           padding: 50px 40px 10px;
           color: #112e51;
+          width: 400px;
         }
         h2 {
           font-weight: 700;
           margin: 0;
-          margin-bottom: ${props.setChildren > 0 ? '115px' : '0'}
+          margin-bottom: ${props.setChildren > 0 ?  '0' : '115px'}
         }
         p {
           display: block;

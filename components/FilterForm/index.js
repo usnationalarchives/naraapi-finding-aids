@@ -16,11 +16,11 @@ class FilterForm extends React.Component {
     return(
       <div>
         <form>
-          <h2>Filter Results By:</h2>
+          <h2>Filter Results By</h2>
           <fieldset>
             <legend>Location</legend>
             <ul>
-              {locationIds.map((locationId, index) => {
+              {locationIds.slice(0, 5).map((locationId, index) => {
                 return(
                   <li key={locationId.id}>
                     <label>
@@ -36,10 +36,14 @@ class FilterForm extends React.Component {
                 );
               })}
             </ul>
-            
+            <Button 
+              text={'View More Locations'}
+              dark={true}
+              type={'text'}
+            />
           </fieldset>
-          <Button onClick={this.props.handleFilterSubmit} text={'Apply'} />
-          
+          <Button onClick={this.props.handleFilterSubmit} text={'Apply'} type={'apply'} />
+          <Button onClick={null} text={'Reset Filters'} type={'text'} dark={true} />
         </form>
         <div id="toggle">
           <Button
@@ -59,6 +63,7 @@ class FilterForm extends React.Component {
             z-index: 10;
             color: #ffffff;
             width: 300px;
+            height: 100%;
             min-width: 300px;
             position: fixed;
             transition: left 2s;
