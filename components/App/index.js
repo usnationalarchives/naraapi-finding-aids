@@ -291,7 +291,7 @@ class App extends React.Component {
           height: 100%;
           min-width: 100%;
           margin: 20px 10px 20px 0;
-          padding-top: 130px;
+          padding-top: 75px;
           padding-left: 100px;
           order: 2;
         }
