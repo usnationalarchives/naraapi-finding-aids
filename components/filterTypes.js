@@ -1,4 +1,4 @@
-export const locationIds = [ // Full list of ~50 on section 9.2
+export const locationIds = [
   {name: "William J. Clinton Library", id: 1},
   {name: "Dwight D. Eisenhower Library", id: 2},
   {name: "Franklin D. Roosevelt Library", id: 3},
@@ -48,4 +48,12 @@ export const locationIds = [ // Full list of ~50 on section 9.2
 	{name: "George W. Bush Library", id: 53},
 	{name: "U.S. Government Printing Office (an affiliated archives)", id: 54},
 	{name: "University of North Texas Libraries (an affiliated archives)", id: 57},	  
+];
+
+
+export const fileTypes = [
+	{name: 'Text', id: 'text'},
+	{name: 'Video', id: 'video'},
+	{name: 'Image', id: 'image%2Fjpeg'},
+	{name: 'Audio', id: 'audio'}
 ];

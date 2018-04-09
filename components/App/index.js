@@ -11,6 +11,7 @@ import {getApiRequest} from '../getApiReq';
 import Button from '../Button';
 import YearScroll from '../YearScroll';
 import Breadcrumb from '../Breadcrumb';
+import Subheader from '../Subheader';
 
 import Head from 'next/head';
 
@@ -28,12 +29,14 @@ class App extends React.Component {
       filtered: props.filtered,
       filteredKeys: null,
       filterOpen: false,
-      year: null
+      year: null,
+      filterModalOpen: false
     }
     this.handleMoreClick = this.handleMoreClick.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleFilterSubmit = this.handleFilterSubmit.bind(this);
     this.getSizeParam = this.getSizeParam.bind(this);
+    this.handleFilterModalOpen = this.handleFilterModalOpen.bind(this);
   }
 
   handleLocationChange(event) {
@@ -84,6 +87,11 @@ class App extends React.Component {
 
       }
     );
+  }
+
+  handleFilterModalOpen(event) {
+    event.preventDefault();
+    this.setState({filterModalOpen: !this.state.filterModalOpen})
   }
 
   handleMoreClick(event) {
@@ -230,21 +238,18 @@ class App extends React.Component {
           <meta name='viewport' content='initial-scale=1.0, width=device-width' />
         </Head>
         <Header />
-        <div id="subheader">
-            <h2>{this.state.pageTitle}</h2>
-            {this.props.query &&
-              <Breadcrumb 
-                recordGroup={this.props.recordGroup}
-                series={this.props.resultType == 'item' ? this.props.query : ''}
-                totalResults={this.props.totalResults}
-              />
-            }
-            {this.props.resultType == 'recordGroup' && 
-              <YearScroll results={this.state.results} onchange={(event) => this.setState({year: event.target.value})} year={this.state.year}/>
-            }
-          </div>
+        <Subheader
+          title={this.state.pageTitle}
+          resultType={this.props.resultType}
+          recordGroup={this.props.recordGroup}
+          query={this.props.query}
+          totalResults={this.props.totalResults}
+          results={this.state.results}
+          onchange={(event) => this.setState({year: event.target.value})}
+          year={this.state.year}
+          filterOpen={this.state.filterOpen}
+        />
         <div id="main">
-
           {this.state.results &&
               <section>
                 {mappedResults}
@@ -266,7 +271,7 @@ class App extends React.Component {
               handleOpen={() => this.setState({filterOpen: !this.state.filterOpen})}
             />
       <style jsx global>{`
-        @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+        @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
         html {
           font-size: 10px;
           height: 100%;
@@ -285,7 +290,7 @@ class App extends React.Component {
           flex-wrap: wrap;
           height: 100%;
           min-width: 100%;
-          margin: 20px 10px;
+          margin: 20px 10px 20px 0;
           padding-top: 130px;
           padding-left: 100px;
           order: 2;
@@ -294,19 +299,6 @@ class App extends React.Component {
           height: 100%;
           padding-top: 0;
           transition: all 2s;
-        }
-        #subheader {
-          transition: all 2s;
-          position: fixed;
-          padding-top: 0;
-          height: auto;
-          width: 100vw;
-          padding-bottom: 25px;
-          padding-left: 100px;
-          top: 93px;
-          left: 0;
-          z-index: 5;
-          background-color: #f1f1f1;
         }
         #more-button {
           padding-top: 0;

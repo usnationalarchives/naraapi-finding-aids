@@ -25,11 +25,14 @@ const YearScroll = ({results, onchange, year}) => {
 
   return(
     <div>
-      <p> Showing records with a start date of {year ? year : min} or later.</p>
+      {/* <p> Showing records with a start date of {year ? year : min} or later.</p> */}
       <span>{min}</span>
       <input type='range' min={min} max={max} step='10' value={year ? year : min} onChange={onchange}/>
       <span>{max}</span>
       <style jsx>{`
+        div {
+          padding-top: 6px;
+        }
         span {
           color: #112e51;
           font-weight: bold;

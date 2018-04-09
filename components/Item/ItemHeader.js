@@ -9,7 +9,12 @@ const ItemHeader = ({title, tag, date}) => {
 
   return(
     <div>
+      {(title && title.length > 75) ?
+        <h3>{title.substring(0,75) + '...'}</h3>
+      :
       <h3>{title}</h3>
+      }
+
       <ul>
         <li>
           {tag}
@@ -27,6 +32,9 @@ const ItemHeader = ({title, tag, date}) => {
           list-style: none;
           padding: 0;
           margin: 0;
+        }
+        h3 {
+          margin-bottom: 0;
         }
       `}</style>
     </div>

@@ -36,6 +36,7 @@ const Breadcrumb = ({recordGroup, series, totalResults, onClick}) => {
           text-decoration: none;
           padding-left: 10px;
           border-right: 2px solid #212121;
+          color: #212121;
         }
         
         .link:focus {
@@ -47,7 +48,9 @@ const Breadcrumb = ({recordGroup, series, totalResults, onClick}) => {
           color: #fad980;
           text-decoration: underline;
         }
-        
+        .link:first-of-type {
+          padding-left: 0;
+        }
       `}</style>
     </scope>
   )
@@ -86,12 +89,18 @@ const Breadcrumb = ({recordGroup, series, totalResults, onClick}) => {
         
       {scoped.styles}
       <style jsx>{`
+        div {
+          clear: left;
+        }
         span {
           color: #212121;
           text-transform: uppercase;
-          padding-left: 10px;
           position: relative;
-          margin-right: 10px;
+          font-weight: bold;
+        }
+        span:first-of-type {
+          padding-left: 10px;
+          font-weight: bold;
         }
         
       `}</style>

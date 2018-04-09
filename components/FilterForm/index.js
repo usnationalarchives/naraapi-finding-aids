@@ -2,20 +2,83 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 
-import {locationIds} from '../filterTypes';
+import {locationIds, fileTypes} from '../filterTypes';
+import FilterModal from './FilterModal';
 
 class FilterForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: props.open
+      open: props.open,
+      filterModalOpen: false
     }
   }
 
   render() {
+    const scoped = resolveScopedStyles(
+      <scope>
+        <style jsx>{`
+          .modal {
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin: 0;
+            z-index: 15;
+            background-color: rgba(50, 58, 69, .9);
+          }
+          .modal::before {
+            display: block;
+            width: 100%;
+            height: 100%;
+            content: "";
+            opacity: 0.3;
+            background-color: rgba(50, 58, 69, 1);
+            backdrop-filter: blur(5px);
+          }
+          .inner-modal {
+            height: 70vh;
+            width: 70vw;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px 30px 10px;
+            background: #ffffff;
+          }
+          .inner-list {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            height: 90%;
+            overflow: scroll;
+            margin-bottom: 20px;
+            color: #212121;
+            padding: 0 20px;
+          }
+          .inner-li {
+            margin-right: 20px;
+          }
+          .inner-fieldset {
+            height: 75%;
+          }
+          .inner-legend {
+            color: #212121;
+          }
+        `}</style>
+      </scope>
+    )
+
+    function resolveScopedStyles(scope) {
+      return {
+        className: scope.props.className,
+        styles: scope.props.children
+      }
+    }
     return(
       <div>
-        <form>
+        <form onSubmit={(event) => event.preventDefault()}>
           <h2>Filter Results By</h2>
           <fieldset>
             <legend>Location</legend>
@@ -36,13 +99,75 @@ class FilterForm extends React.Component {
                 );
               })}
             </ul>
+            
             <Button 
               text={'View More Locations'}
               dark={true}
               type={'text'}
+              onClick={() => this.setState({filterModalOpen: !this.state.filterModalOpen})}
             />
           </fieldset>
-          <Button onClick={this.props.handleFilterSubmit} text={'Apply'} type={'apply'} />
+          <fieldset>
+            <legend>File Type</legend>
+            <ul>
+              {fileTypes.map((fileType, index) => {
+                return(
+                  <li key={index}>
+                    <label>
+                      <input
+                        name={fileType.name}
+                        type="checkbox"
+                        value={fileType.id}
+                        onChange={null}
+                      />
+                      {fileType.name}
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </fieldset>
+          {this.state.filterModalOpen &&
+              <FilterModal>
+                <div className={`modal ${scoped.className}`}>
+                  <div className={`inner-modal ${scoped.className}`}>
+                  <Button
+                    onClick={() => this.setState({filterModalOpen: !this.state.filterModalOpen})}
+                    text={'Close'}
+                    type={'close'}
+                    dark={false}
+                  />
+                  <fieldset className={`inner-fieldset ${scoped.className}`}>
+                    <legend className={`inner-legend ${scoped.className}`}>Location</legend>
+                    <ul className={`inner-list ${scoped.className}`}>
+                      {locationIds.map((locationId, index) => {
+                        return(
+                          <li className={`inner-li ${scoped.className}`} key={locationId.id}>
+                            <label>
+                              <input
+                                name={locationId.id}
+                                type="checkbox"
+                                value={locationId.id}
+                                onChange={this.props.handleLocationChange}
+                              />
+                              {locationId.name}
+                            </label>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </fieldset>
+                  <Button 
+                      text={'Apply'}
+                      dark={true}
+                      type={'default'}
+                    />
+                  </div>
+                </div>
+                {scoped.styles}
+              </FilterModal>
+            }
+          <Button onClick={this.props.handleFilterSubmit} text={'Apply'} type={'default'} dark={false} />
           <Button onClick={null} text={'Reset Filters'} type={'text'} dark={true} />
         </form>
         <div id="toggle">
@@ -68,9 +193,16 @@ class FilterForm extends React.Component {
             position: fixed;
             transition: left 2s;
           }
+          h2 {
+            text-align: left;
+          }
+          form {
+            text-align: center;
+          }
           legend {
             font-weight: 700;
             text-transform: uppercase;
+            text-align: left;
           }
           ul {
             list-style-type: none;
@@ -82,12 +214,10 @@ class FilterForm extends React.Component {
           }
           fieldset {
             border: 0;
-            height: 45vh;
-            overflow-x: scroll;
-            column-count: 2;
-            padding: 10px;
+            padding: 10px 0;
             margin: 10px 0;
             border: 0;
+            text-align: left;
           }
           #toggle {
             position: absolute;

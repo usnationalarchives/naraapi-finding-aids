@@ -126,7 +126,7 @@ class Set extends React.Component {
             display: flex;
             background-color: #ffffff;
             flex-direction: row;
-            margin: 10px;
+            margin: 10px 20px 10px 0;
             overflow: hidden;
             position: relative;
             width: 300px;

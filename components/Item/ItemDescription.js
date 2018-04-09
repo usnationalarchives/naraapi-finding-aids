@@ -5,15 +5,15 @@ const ItemDescription = ({description}) => {
   return(
     <div>
       {(description && description.length > 200) ?
-        <p>{description.substring(0,197) + '...'}</p>
+        <p className={'description'}>{description.substring(0,197) + '...'}</p>
       :
-        <p>{description}</p>
+        <p className={'description'}>{description}</p>
       }
       <p>Click to learn more.</p>
       <style jsx>{`
         div {
           position: absolute;
-          padding: 25% 20px;
+          padding: 0 20px;
           z-index: 4;
           top: 0;
           right: 0;
@@ -23,10 +23,14 @@ const ItemDescription = ({description}) => {
           color: #ffffff;
           display: flex;
           flex-direction: column;
-          justify-content: space-around;
+          align-items: center;
+          justify-content: center;
         }
         p {
           margin: 0;
+        }
+        .description {
+          padding-bottom: 20px;
         }
       `}</style>
     </div>

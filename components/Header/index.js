@@ -19,8 +19,9 @@ const Header = ({
       <style jsx>{`
         .link:link,
         .link:visited {
-          background: url(/static/us-national-archives.svg) no-repeat left top;
-          padding-left: 80px;
+          background: url(/static/nara-horizontal-logo.svg) no-repeat left top;
+          background-size: 185px 45px;
+          padding-left: 185px;
           color: #212121;
           font-weight: 700;
           font-size: 35px;

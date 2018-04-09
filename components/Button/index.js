@@ -1,28 +1,99 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({onClick, text, type, dark}) => {
+const Button = ({onClick, text, type, dark, centered}) => {
   let btnHeight = 'auto';
   let btnWidth = 'auto';
   let btnFilter = '2.5rem';
   let btnMargin = '0';
 
+  let btnStyle;
+  
   switch (type) {
     case 'more':
-      btnHeight = '100%'
+      btnStyle = {
+        height: '100%',
+        width: 'auto',
+        background: !dark ? '#ffffff' : ' #112e51',
+        margin: '0',
+        padding: '10px 20px',
+        border: '2px solid transparent',
+        borderRadius: '2.5rem',
+        hover: {
+          background: !dark ? '#112e51' : '#ffffff',
+          color: !dark ? '#ffffff' : '#205493',
+          border: !dark ? '2px solid #ffffff' : '2px solid #205493'
+        }
+      }
       break;
     case 'filter':
-      btnHeight = '80px';
-      btnWidth = '80px';
+      btnStyle = {
+        display: 'block',
+        height: '80px',
+        width: '80px',
+        background: !dark ? '#ffffff' : ' #112e51',
+        margin: '0',
+        padding: '10px 20px',
+        border: '2px solid transparent',
+        borderRadius: '0',
+        hover: {
+          background: !dark ? '#112e51' : '#ffffff',
+          color: !dark ? '#ffffff' : '#112e51',
+          border: !dark ? '2px solid #ffffff' : '2px solid #112e51'
+        }
+      }
       btnFilter = '0';
       break;
-    case 'apply':
-      btnMargin = '0 auto';
-      btnWidth = '50%';
+    case 'default':
+      btnStyle = {
+        display: 'block',
+        height: 'auto',
+        width: 'auto',
+        background: !dark ? '#ffffff' : ' #112e51',
+        margin: '0 auto 20px',
+        padding: '10px 40px',
+        border: '2px solid transparent',
+        borderRadius: '2.5rem',
+        hover: {
+          background: !dark ? '#112e51' : '#ffffff',
+          color: !dark ? '#ffffff' : '#205493',
+          border: !dark ? '2px solid #ffffff' : '2px solid #205493'
+        }
+      }
       break;
     case 'text':
-      btnMargin = '0 auto';
-      btnWidth = '50%';
+      btnStyle = {
+        display: 'inline-block',
+        height: 'auto',
+        width: 'auto',
+        background: 'none',
+        margin: '0 auto',
+        padding: '0',
+        border: '2px solid transparent',
+        borderRadius: '2.5rem',
+        hover: {
+          background: 'transparent',
+          color: !dark ? '#205493' : '#ffffff',
+          border: '2px solid transparent'
+        }
+      }
+      break;
+    case 'close':
+      btnStyle = {
+        display: 'block',
+        height: 'auto',
+        width: 'auto',
+        background: !dark ? '#ffffff' : ' #112e51',
+        margin: '0',
+        padding: '8px 15px',
+        border: '2px solid transparent',
+        borderRadius: '50%',
+        hover: {
+          background: 'transparent',
+          color: !dark ? '#112e51' : '#ffffff',
+          border: !dark ? '2px solid #112e51' : '2px solid #ffffff'
+        }
+      }
       break;
   }
 
@@ -31,18 +102,19 @@ const Button = ({onClick, text, type, dark}) => {
       {text}
       <style jsx>{`
         button {
-          background: ${!dark ? '#ffffff' : ' #112e51'};
+          background: ${btnStyle.background};
           border: 0;
-          display: block;
-          border-radius: ${btnFilter};
+          display: ${btnStyle.display};
+          border-radius: ${btnStyle.borderRadius};
           color: ${!dark ? '#112e51' : '#ffffff'};
           cursor: pointer;
           font-size: 14px;
           font-weight: 700;
-          height: ${btnHeight};
-          width: ${btnWidth};
-          margin: ${btnMargin};
-          padding: ${type === 'apply' ? '10px 40px' : '10px 20px'};
+          height: ${btnStyle.height};
+          width: ${btnStyle.width};
+          margin: ${btnStyle.margin};
+          padding: ${btnStyle.padding};
+          border: ${btnStyle.border};
           position: ${type === 'close' ? 'absolute' : 'relative'};
           top: ${type === 'close' ? '10px' : 'auto'};
           right: ${type === 'close' ? '10px' : 'auto'};
@@ -64,8 +136,10 @@ const Button = ({onClick, text, type, dark}) => {
           text-indent: 0;
         }
         button:hover {
-          background: ${!dark ? '#112e51' : '#ffffff'} ;
-          color: ${!dark ? '#ffffff' : '#205493'} ;
+          background: ${btnStyle.hover.background};
+          color: ${btnStyle.hover.color};
+          border: ${btnStyle.hover.border};
+          text-decoration: ${type === 'text' ? 'underline' : 'none'};
         }
         button:active {
           background: ${!dark ? '#112e51' : '#ffffff'};
@@ -83,7 +157,7 @@ const Button = ({onClick, text, type, dark}) => {
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  type: PropTypes.oneOf(['default', 'close', 'more', 'filter'])
+  type: PropTypes.oneOf(['default', 'close', 'more', 'filter', 'text'])
 }
 
 export default Button;

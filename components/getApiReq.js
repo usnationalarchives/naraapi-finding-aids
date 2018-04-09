@@ -49,8 +49,6 @@ export function getApiRequest(apiReqObj) {
   // Next check for filters
   if(apiReqObj.filtered) {
     // Check for location filter
-    console.log('filter location')
-      console.log(apiReqObj.filterLocation)
     if(apiReqObj.filterLocation) {
       
       switch(apiReqObj.resultType) {
@@ -66,31 +64,6 @@ export function getApiRequest(apiReqObj) {
       }
     }
   }
-
-  // if(apiReqObj.resultType === 'recordGroup') {
-  //   console.log(apiReqObj)
-  //   if(apiReqObj.filtered === true && apiReqObj.filterLocation) {
-      
-  //     apiLink += '&description.recordGroup.referenceUnitArray.referenceUnit.naId=' + apiReqObj.filterLocation;
-  //     console.log(apiLink)
-  //   }
-  // }
-
-  // if(apiReqObj.resultType === 'series') {
-  //   apiLink += '&description.series.parentRecordGroup.recordGroupNumber=' + apiReqObj.queryId;
-  //   if(apiReqObj.filtered === true && apiReqObj.filterLocation) {
-  //     apiLink += '&description.series.physicalOccurrenceArray.seriesPhysicalOccurrence.referenceUnitArray.referenceUnit.naId=' + apiReqObj.filterLocation
-  //   }
-  // }
-
-  // if(apiReqObj.resultType === 'item') {
-  //   apiLink += '&description.item.parentSeries.naId_is=' + apiReqObj.queryId;
-  //   if(apiReqObj.filtered === true && apiReqObj.filterLocation) {
-  //     apiLink += '&description.series.physicalOccurrenceArray.seriesPhysicalOccurrence.referenceUnitArray.referenceUnit.naId=' + apiReqObj.filterLocation
-  //   }
-  // }
-  console.log(apiReqObj)
-  console.log(apiLink)
 
   return apiLink;
 }
