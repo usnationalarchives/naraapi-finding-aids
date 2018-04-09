@@ -47,6 +47,9 @@ const Subheader = ({
           z-index: 5;
           background-color: #f1f1f1;
         }
+        .breadcrumb h2 {
+          width: 80vw;
+        }
         .timeline {
           padding-top: 20px;
         }
